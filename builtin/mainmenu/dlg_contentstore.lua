@@ -171,7 +171,7 @@ local function get_raw_dependencies(package)
 	local base_url = core.settings:get("contentdb_url")
 	local url = base_url .. url_fmt:format(package.id, core.get_max_supp_proto(), version.string)
 
-	local response = http.fetch_sync({ url = url })
+	local response = http.fetch_sync({ url = url, timeout = core.settings:get("http_timeout") })
 	if not response.succeeded then
 		return
 	end

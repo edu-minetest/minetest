@@ -69,7 +69,7 @@ function serverlistmgr.sync()
 				core.get_min_supp_proto(),
 				core.get_max_supp_proto())
 
-			local response = http.fetch_sync({ url = url })
+			local response = http.fetch_sync({ url = url, timeout = core.settings:get("http_timeout") })
 			if not response.succeeded then
 				return {}
 			end
