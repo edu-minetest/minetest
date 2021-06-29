@@ -210,7 +210,11 @@ void init_gettext(const char *path, const std::string &configured_language,
 #ifdef __ANDROID__
 		char lang[3] = {0};
 		AConfiguration_getLanguage(porting::app_global->config, lang);
-		setenv("LANG", lang, 1);
+		if (lang[0] == 0 || (lang[0] == 'z' && lang[1] == 'h')) {
+			setenv("LANG", "zh_CN", 1);
+		} else {
+			setenv("LANG", lang, 1);
+		}
 #endif
 		 /* set current system default locale */
 		setlocale(LC_ALL, "");
