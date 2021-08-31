@@ -49,6 +49,7 @@ void TestSettings::runTests(IGameDef *gamedef)
 	TEST(testDefaults);
 	TEST(testFlagDesc);
   TEST(testHierarchical);
+	TEST(testOverwritten);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -339,6 +340,7 @@ void TestSettings::testOverwritten() {
 
 	std::string game_config_text =
 	"*xname=overGame\n"
+	"*secure.xx=doNotAllowed\n"
 	"";
 
 	std::string world_config_text =
@@ -347,6 +349,7 @@ void TestSettings::testOverwritten() {
 
 	std::string global_config_text =
 	"xname=global\n"
+	"secure.xx=ok\n"
 	"";
 
 	std::string over_global_config_text =
@@ -356,8 +359,11 @@ void TestSettings::testOverwritten() {
 	try {
 		std::istringstream isGame(game_config_text);
 		game->parseConfigLines(isGame);
+		UASSERT(global->exists("secure.xx") == true);
+		game->removeSecureSettings();
 		UASSERT(world->get("xname") == "overGame");
 		UASSERT(global->get("xname") == "overGame");
+		UASSERT(global->exists("secure.xx") == false);
 
 		std::istringstream isw(world_config_text);
 		world->parseConfigLines(isw);
@@ -376,6 +382,7 @@ void TestSettings::testOverwritten() {
 		UASSERT(world->get("xname") == "oGlobal");
 		UASSERT(global->get("xname") == "oGlobal");
 		UASSERT(game->get("xname") == "oGlobal");
+		UASSERT(global->get("secure.xx") == "ok");
 
 	} catch (SettingNotFoundException &e) {
 		UASSERT(!"Setting not found!");

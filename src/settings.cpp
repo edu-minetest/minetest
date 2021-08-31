@@ -1104,13 +1104,18 @@ void Settings::deregisterChangedCallback(const std::string &name,
 void Settings::removeSecureSettings()
 {
 	for (const auto &name : getNames()) {
-		if (name.compare(0, 7, "secure.") != 0)
+		if (name.compare(0, 7, "secure.") != 0 && name.compare(0, 8, "*secure.") != 0)
 			continue;
 
 		errorstream << "Secure setting " << name
 				<< " isn't allowed, so was ignored."
 				<< std::endl;
 		remove(name);
+
+		if (name.at(0) == '*') {
+			Settings *topmost = Settings::getLayer(SL_TOPMOST);
+			if (topmost != nullptr) topmost->remove(name.substr(1));
+		}
 	}
 }
 
