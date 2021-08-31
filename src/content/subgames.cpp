@@ -344,23 +344,29 @@ void loadGameConfAndInitWorld(const std::string &path, const std::string &name,
 
 	fs::CreateAllDirs(final_path);
 
+	Settings *world_settings = Settings::getLayer(SL_WORLD);
+	if (world_settings == nullptr) {
+		world_settings = Settings::createLayer(SL_WORLD);
+	}
 	// Create world.mt if does not already exist
 	std::string worldmt_path = final_path + DIR_DELIM "world.mt";
 	if (!fs::PathExists(worldmt_path)) {
-		Settings conf;
 
-		conf.set("world_name", name);
-		conf.set("gameid", gamespec.id);
-		conf.set("backend", "sqlite3");
-		conf.set("player_backend", "sqlite3");
-		conf.set("auth_backend", "sqlite3");
-		conf.setBool("creative_mode", g_settings->getBool("creative_mode"));
-		conf.setBool("enable_damage", g_settings->getBool("enable_damage"));
+		world_settings->set("world_name", name);
+		world_settings->set("gameid", gamespec.id);
+		world_settings->set("backend", "sqlite3");
+		world_settings->set("player_backend", "sqlite3");
+		world_settings->set("auth_backend", "sqlite3");
+		world_settings->setBool("creative_mode", g_settings->getBool("creative_mode"));
+		world_settings->setBool("enable_damage", g_settings->getBool("enable_damage"));
 
-		if (!conf.updateConfigFile(worldmt_path.c_str())) {
+		if (!world_settings->updateConfigFile(worldmt_path.c_str())) {
 			throw BaseException("Failed to update the config file");
 		}
+	} else {
+		world_settings->readConfigFile(worldmt_path.c_str());
 	}
+	world_settings->removeSecureSettings();
 
 	// Create map_meta.txt if does not already exist
 	std::string map_meta_path = final_path + DIR_DELIM + "map_meta.txt";
