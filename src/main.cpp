@@ -491,6 +491,7 @@ static bool init_common(const Settings &cmd_args, int argc, char *argv[])
 
 	sockets_init();
 
+	Settings::createLayer(SL_TOPMOST);
 	// Initialize g_settings
 	Settings::createLayer(SL_GLOBAL);
 

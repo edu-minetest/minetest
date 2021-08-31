@@ -105,7 +105,9 @@ Settings *Settings::createLayer(SettingsLayer sl, const std::string &end_tag)
 Settings *Settings::getLayer(SettingsLayer sl)
 {
 	sanity_check((int)sl >= 0 && sl < SL_TOTAL_COUNT);
-	return g_hierarchy.layers[(int)sl];
+	// errorstream << "get layer(" << sl << "):" << g_hierarchy.layers.size() << std::endl;
+	// if (sl >= g_hierarchy.layers.size()) return nullptr;
+	return g_hierarchy.getLayer(sl);
 }
 
 
@@ -229,6 +231,10 @@ bool Settings::parseConfigLines(std::istream &is)
 		case SPE_COMMENT:
 			break;
 		case SPE_KVPAIR:
+			if (name.at(0) == '*') {
+				Settings *topmost = Settings::getLayer(SL_TOPMOST);
+				if (topmost != nullptr) topmost->set(name.substr(1), value);
+			}
 			m_settings[name] = SettingsEntry(value);
 			break;
 		case SPE_END:
@@ -464,21 +470,42 @@ Settings *Settings::getParent() const
 	return m_hierarchy ? m_hierarchy->getParent(m_settingslayer) : nullptr;
 }
 
+const SettingsEntry *Settings::getSelfEntry(const std::string &name) const
+{
+	const SettingsEntry *result;
+	SettingEntries::const_iterator n;
+	if ((n = m_settings.find(name)) != m_settings.end()) {
+		result = &(n->second);
+	} else
+		result = nullptr;
+	return result;
+}
 
-const SettingsEntry &Settings::getEntry(const std::string &name) const
+const SettingsEntry &Settings::_getEntry(const std::string &name) const
 {
 	{
 		MutexAutoLock lock(m_mutex);
 
-		SettingEntries::const_iterator n;
-		if ((n = m_settings.find(name)) != m_settings.end())
-			return n->second;
+		const SettingsEntry *result = getSelfEntry(name);
+		if (result != nullptr) return *result;
 	}
 
 	if (auto parent = getParent())
-		return parent->getEntry(name);
+		return parent->_getEntry(name);
 
 	throw SettingNotFoundException("Setting [" + name + "] not found.");
+}
+
+const SettingsEntry &Settings::getEntry(const std::string &name) const
+{
+	if (m_settingslayer >= 0 && m_settingslayer < (int)SL_TOPMOST) {
+		Settings *topmost = Settings::getLayer(SL_TOPMOST);
+		SettingEntries::const_iterator n;
+		const SettingsEntry *result = topmost->getSelfEntry(name);
+		if (result != nullptr) return *result;
+	}
+
+	return _getEntry(name);
 }
 
 
@@ -661,17 +688,26 @@ bool Settings::getNoiseParamsFromGroup(const std::string &name,
 }
 
 
-bool Settings::exists(const std::string &name) const
+bool Settings::_exists(const std::string &name) const
 {
 	MutexAutoLock lock(m_mutex);
 
 	if (m_settings.find(name) != m_settings.end())
 		return true;
 	if (auto parent = getParent())
-		return parent->exists(name);
+		return parent->_exists(name);
 	return false;
 }
 
+bool Settings::exists(const std::string &name) const
+{
+	if (m_settingslayer >= 0 && m_settingslayer < (int)SL_TOPMOST) {
+		Settings *topmost = Settings::getLayer(SL_TOPMOST);
+		if (topmost != nullptr) return topmost->_exists(name);
+	}
+
+	return _exists(name);
+}
 
 std::vector<std::string> Settings::getNames() const
 {

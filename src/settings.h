@@ -65,7 +65,11 @@ enum SettingsParseEvent {
 enum SettingsLayer {
 	SL_DEFAULTS,
 	SL_GAME,
+	// add the World Layer
+	SL_WORLD,
 	SL_GLOBAL,
+	// add the topmost layer, to save the overloaded special configuration item
+	SL_TOPMOST,
 	SL_TOTAL_COUNT
 };
 
@@ -174,6 +178,8 @@ public:
 
 	// return all keys used
 	std::vector<std::string> getNames() const;
+
+	bool _exists(const std::string &name) const;
 	bool exists(const std::string &name) const;
 
 
@@ -265,6 +271,8 @@ private:
 	 ***********/
 	Settings *getParent() const;
 
+	const SettingsEntry *getSelfEntry(const std::string &name) const;
+	const SettingsEntry &_getEntry(const std::string &name) const;
 	const SettingsEntry &getEntry(const std::string &name) const;
 
 	// Allow TestSettings to run sanity checks using private functions.

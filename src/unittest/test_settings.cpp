@@ -34,6 +34,8 @@ public:
 	void testAllSettings();
 	void testDefaults();
 	void testFlagDesc();
+  void testHierarchical();
+  void testOverwritten();
 
 	static const char *config_text_before;
 	static const std::string config_text_after;
@@ -46,6 +48,7 @@ void TestSettings::runTests(IGameDef *gamedef)
 	TEST(testAllSettings);
 	TEST(testDefaults);
 	TEST(testFlagDesc);
+  TEST(testHierarchical);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -293,4 +296,93 @@ void TestSettings::testFlagDesc()
 	UASSERT(s.getFlagStr("test_flags", flagdesc, nullptr) == 0x10);
 
 	delete &s;
+}
+
+void TestSettings::testHierarchical() {
+	Settings *game = Settings::createLayer(SL_GAME);
+	Settings *world = Settings::createLayer(SL_WORLD);
+	Settings *def = Settings::getLayer(SL_DEFAULTS);
+	Settings *global = Settings::getLayer(SL_GLOBAL);
+
+	def->set("xname", "FooBar");
+	UASSERT(def->get("xname") == "FooBar");
+	UASSERT(game->get("xname") == "FooBar");
+
+	game->set("xname", "Baz");
+	UASSERT(game->get("xname") == "Baz");
+
+	UASSERT(world->get("xname") == "Baz");
+	UASSERT(global->get("xname") == "Baz");
+  game->remove("xname");
+
+	UASSERT(world->get("xname") == "FooBar");
+	UASSERT(global->get("xname") == "FooBar");
+  world->set("xname", "world");
+	UASSERT(global->get("xname") == "world");
+
+  global->set("xname", "global");
+	UASSERT(global->get("xname") == "global");
+
+  global->remove("xname");
+	delete game;
+	delete world;
+
+	// Restore default settings
+	delete Settings::getLayer(SL_DEFAULTS);
+	set_default_settings();
+}
+
+void TestSettings::testOverwritten() {
+	Settings *game = Settings::createLayer(SL_GAME);
+	Settings *world = Settings::createLayer(SL_WORLD);
+	Settings *global = Settings::getLayer(SL_GLOBAL);
+
+	std::string game_config_text =
+	"*xname=overGame\n"
+	"";
+
+	std::string world_config_text =
+	"*xname=overWorld\n"
+	"";
+
+	std::string global_config_text =
+	"xname=global\n"
+	"";
+
+	std::string over_global_config_text =
+	"*xname=oGlobal\n"
+	"";
+
+	try {
+		std::istringstream isGame(game_config_text);
+		game->parseConfigLines(isGame);
+		UASSERT(world->get("xname") == "overGame");
+		UASSERT(global->get("xname") == "overGame");
+
+		std::istringstream isw(world_config_text);
+		world->parseConfigLines(isw);
+		UASSERT(world->get("xname") == "overWorld");
+		UASSERT(global->get("xname") == "overWorld");
+		UASSERT(game->get("xname") == "overWorld");
+
+		std::istringstream isg(global_config_text);
+		global->parseConfigLines(isg);
+		UASSERT(world->get("xname") == "overWorld");
+		UASSERT(global->get("xname") == "overWorld");
+		UASSERT(game->get("xname") == "overWorld");
+
+		std::istringstream isover_g(over_global_config_text);
+		global->parseConfigLines(isover_g);
+		UASSERT(world->get("xname") == "oGlobal");
+		UASSERT(global->get("xname") == "oGlobal");
+		UASSERT(game->get("xname") == "oGlobal");
+
+	} catch (SettingNotFoundException &e) {
+		UASSERT(!"Setting not found!");
+	}
+
+  global->remove("xname");
+	delete game;
+	delete world;
+
 }
