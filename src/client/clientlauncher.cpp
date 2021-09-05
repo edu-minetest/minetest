@@ -473,8 +473,16 @@ bool ClientLauncher::launch_game(std::string &error_message,
 
 	// If using simple singleplayer mode, override
 	if (start_data.isSinglePlayer()) {
+		if (start_data.name.length() == 0) {
+			start_data.name = "singleplayer";
+			start_data.password = "";
+		} else if (start_data.name == "singleplayer") {
+			start_data.password = "";
+		}
+		/*
 		start_data.name = "singleplayer";
 		start_data.password = "";
+		*/
 		start_data.socket_port = myrand_range(49152, 65535);
 	} else {
 		g_settings->set("name", start_data.name);
