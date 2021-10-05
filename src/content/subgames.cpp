@@ -419,11 +419,11 @@ void loadGameConfAndInitWorld(const std::string &path, const std::string &name,
 			g_settings->setV3F("static_spawnpoint", spawnpoint);
 		}
 
-		if (!g_settings->_exists("creative_mode")) {
+		if (!g_settings->existsLocal("creative_mode")) {
 			g_settings->setBool("creative_mode", conf.getBool("creative_mode"));
 		}
 
-		if (!g_settings->_exists("enable_damage")) {
+		if (!g_settings->existsLocal("enable_damage")) {
 			g_settings->setBool("enable_damage", conf.getBool("enable_damage"));
 		}
 	}
