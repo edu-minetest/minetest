@@ -30,7 +30,7 @@ core.builtin_auth_handler = {
 				end
 			end
 		-- For the admin, give everything
-		elseif name == core.settings:get("name") then
+		elseif name == (core.settings:get("teacher_name") or "teacher") then
 			for priv, def in pairs(core.registered_privileges) do
 				if def.give_to_admin then
 					privileges[priv] = true
