@@ -17,6 +17,10 @@
 
 -- https://github.com/orgs/minetest/teams/engine/members
 
+local edu_core_developers = {
+	"Riceball LEE (snowyu) <snowyu.lee@gmail.com>",
+}
+
 local core_developers = {
 	"Perttu Ahola (celeron55) <celeron55@gmail.com> [Project founder]",
 	"sfan5 <sfan5@live.de>",
@@ -98,6 +102,11 @@ local previous_contributors = {
 	"Jeija <jeija@mesecons.net>",
 }
 
+local music_contributors = {
+	"Cleyton Kauffman",
+	"cynicmusic",
+}
+
 local function prepare_credits(dest, source)
 	for _, s in ipairs(source) do
 		-- if there's text inside brackets make it gray-ish
@@ -128,6 +137,10 @@ return {
 
 		local credit_list = {}
 		table.insert_all(credit_list, {
+			core.colorize("#ff0", "Minetest Edu" .. fgettext("Core Developers"))
+		})
+		prepare_credits(credit_list, edu_core_developers)
+		table.insert_all(credit_list, {
 			core.colorize("#000", "Dedication of the current release"),
 			"The 5.7.0 release is dedicated to the memory of",
 			"Minetest developer Jude Melton-Houghton (TurkeyMcMac)",
@@ -157,14 +170,22 @@ return {
 			core.colorize("#ff0", fgettext("Previous Contributors"))
 		})
 		prepare_credits(credit_list, previous_contributors)
+		table.insert_all(credit_list, {
+			"",
+			core.colorize("#ff0", fgettext("Music"))
+		})
+		prepare_credits(credit_list, music_contributors)
 		local credit_fs, scroll_height = build_hacky_list(credit_list)
 		-- account for the visible portion
 		scroll_height = math.max(0, scroll_height - 6.9)
 
+		local verHash = version.hash or ""
+		if verHash ~= '' then verHash = "-" .. verHash end
+
 		local fs = "image[1.5,0.6;2.5,2.5;" .. core.formspec_escape(logofile) .. "]" ..
 			"style[label_button;border=false]" ..
 			"button[0.1,3.4;5.3,0.5;label_button;" ..
-			core.formspec_escape(version.project .. " " .. version.string) .. "]" ..
+			core.formspec_escape(version.project .. " " .. version.string .. verHash) .. "]" ..
 			"button[1.5,4.1;2.5,0.8;homepage;minetest.net]" ..
 			"scroll_container[5.5,0.1;9.5,6.9;scroll_credits;vertical;" ..
 			tostring(scroll_height / 1000) .. "]" .. credit_fs ..

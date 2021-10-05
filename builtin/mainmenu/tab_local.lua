@@ -187,9 +187,12 @@ local function get_formspec(tabview, name, tabdata)
 				"button[7.9,4.75;4.1,1;play;".. fgettext("Host Game") .. "]" ..
 				"checkbox[0,"..y..";cb_server_announce;" .. fgettext("Announce Server") .. ";" ..
 				dump(core.settings:get_bool("server_announce")) .. "]" ..
+				""
+				--[[
 				"field[0.3,2.85;3.8,0.5;te_playername;" .. fgettext("Name") .. ";" ..
 				core.formspec_escape(core.settings:get("name")) .. "]" ..
 				"pwdfield[0.3,4.05;3.8,0.5;te_passwd;" .. fgettext("Password") .. "]"
+				--]]
 
 		local bind_addr = core.settings:get("bind_address")
 		if bind_addr ~= nil and bind_addr ~= "" then
@@ -308,8 +311,10 @@ local function main_button_handler(this, fields, name, tabdata)
 		end
 
 		if core.settings:get_bool("enable_server") then
-			gamedata.playername = fields["te_playername"]
-			gamedata.password   = fields["te_passwd"]
+      local username = core.settings:get("teacher_name") or "teacher"
+      local pass = getTeacherPasswd()
+			gamedata.playername = username
+			gamedata.password   = core.decode_base64(pass)
 			gamedata.port       = fields["te_serverport"]
 			gamedata.address    = ""
 
@@ -318,6 +323,7 @@ local function main_button_handler(this, fields, name, tabdata)
 				core.settings:set("bind_address",fields["te_serveraddr"])
 			end
 		else
+			core.settings:set_bool("is_teacher", true)
 			gamedata.singleplayer = true
 		end
 

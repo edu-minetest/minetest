@@ -15,6 +15,9 @@
 --with this program; if not, write to the Free Software Foundation, Inc.,
 --51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+local menupath = core.get_mainmenu_path()
+local enable_default_mods = dofile(menupath .. DIR_DELIM .. "enable_default_mods.lua")
+
 local function table_to_flags(ftable)
 	-- Convert e.g. { jungles = true, caves = false } to "jungles,nocaves"
 	local str = {}
@@ -384,6 +387,26 @@ local function create_world_buttonhandler(this, fields)
 			if menudata.worldlist:uid_exists_raw(worldname) then
 				message = fgettext("A world named \"$1\" already exists", worldname)
 			end
+
+			if message ~= nil then
+				gamedata.errormessage = message
+			else
+        local game_id = pkgmgr.games[gameindex].id
+        if (game_id == "minetest") then
+          menudata.worldlist:refresh()
+          enable_default_mods(worldname)
+        end
+				core.settings:set("menu_last_game",game_id)
+				if this.data.update_worldlist_filter then
+					menudata.worldlist:set_filtercriteria(game_id)
+					mm_game_theme.update("singleplayer", game_id)
+				end
+				menudata.worldlist:refresh()
+				core.settings:set("mainmenu_last_selected_world",
+									menudata.worldlist:raw_index_by_uid(worldname))
+			end
+		else
+			gamedata.errormessage = fgettext("No game selected")
 		end
 
 		if message == nil then

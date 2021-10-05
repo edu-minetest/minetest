@@ -38,6 +38,7 @@ dofile(menupath .. DIR_DELIM .. "common.lua")
 dofile(menupath .. DIR_DELIM .. "pkgmgr.lua")
 dofile(menupath .. DIR_DELIM .. "serverlistmgr.lua")
 dofile(menupath .. DIR_DELIM .. "game_theme.lua")
+dofile(menupath .. DIR_DELIM .. "teacher_config.lua")
 
 dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_settings_advanced.lua")
@@ -48,6 +49,9 @@ dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_register.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_rename_modpack.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_version_info.lua")
+dofile(menupath .. DIR_DELIM .. "dlg_input_passwd.lua")
+dofile(menupath .. DIR_DELIM .. "dlg_change_passwd.lua")
+dofile(menupath .. DIR_DELIM .. "dlg_play_game.lua")
 
 local tabs = {}
 
@@ -56,6 +60,7 @@ tabs.content  = dofile(menupath .. DIR_DELIM .. "tab_content.lua")
 tabs.about    = dofile(menupath .. DIR_DELIM .. "tab_about.lua")
 tabs.local_game = dofile(menupath .. DIR_DELIM .. "tab_local.lua")
 tabs.play_online = dofile(menupath .. DIR_DELIM .. "tab_online.lua")
+tabs.teacher = dofile(menupath .. DIR_DELIM .. "tab_teacher.lua")
 
 --------------------------------------------------------------------------------
 local function main_event_handler(tabview, event)
@@ -101,6 +106,7 @@ local function init_globals()
 	-- note: size would be 15.5,7.1 in real coordinates mode
 
 	tv_main:set_autosave_tab(true)
+	tv_main:add(tabs.teacher)
 	tv_main:add(tabs.local_game)
 	tv_main:add(tabs.play_online)
 
@@ -118,14 +124,27 @@ local function init_globals()
 
 	-- In case the folder of the last selected game has been deleted,
 	-- display "Minetest" as a header
+--[[
 	if tv_main.current_tab == "local" and not game then
 		mm_game_theme.reset()
 	end
-
+--]]
 	ui.set_default("maintab")
 	check_new_version()
-	tv_main:show()
+	-- tv_main:show()
+	local dlg = create_play_game_dlg()
+	dlg:set_parent(tv_main)
+	-- tv_main:hide()
+	dlg:show()
+
 	ui.update()
+
+--[[
+	core.sound_play("main_menu", true)
+--]]
+	if not core.settings:get_bool("mute_sound", false) then
+		menudata.sound_handler = core.sound_play("main_menu", true)
+	end
 end
 
 init_globals()

@@ -39,6 +39,7 @@ function mm_game_theme.update(tab,gamedetails)
 	end
 
 	if gamedetails == nil then
+		mm_game_theme.reset()
 		return
 	end
 
