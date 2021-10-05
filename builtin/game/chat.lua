@@ -229,6 +229,8 @@ core.register_chatcommand("haspriv", {
 })
 
 local function handle_grant_command(caller, grantname, grantprivstr)
+	local is_singleplayer = core.is_singleplayer()
+	local is_teacher = core.settings:get_bool("is_teacher", false)
 	local caller_privs = core.get_player_privs(caller)
 	if not (caller_privs.privs or caller_privs.basic_privs) then
 		return false, S("Your privileges are insufficient.")
@@ -246,7 +248,11 @@ local function handle_grant_command(caller, grantname, grantprivstr)
 	local basic_privs =
 		core.string_to_privs(core.settings:get("basic_privs") or "interact,shout")
 	for priv, _ in pairs(grantprivs) do
-		if not basic_privs[priv] and not caller_privs.privs then
+		local hasPriv = basic_privs[priv] or caller_privs.privs
+		if is_singleplayer and not is_teacher and hasPriv then
+			hasPriv = basic_privs[priv] or caller_privs[priv]
+		end
+		if not hasPriv then
 			return false, S("Your privileges are insufficient. "..
 					"'@1' only allows you to grant: @2",
 					"basic_privs",
