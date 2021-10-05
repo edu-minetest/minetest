@@ -664,7 +664,6 @@ bool Settings::getNoiseParamsFromGroup(const std::string &name,
 	return true;
 }
 
-
 bool Settings::exists(const std::string &name) const
 {
 	if (existsLocal(name))
