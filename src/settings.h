@@ -27,6 +27,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include <set>
 #include <mutex>
 
+#include <cereal/cereal.hpp>
+#include <cereal/access.hpp>
+#include <cereal/archives/portable_binary.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/types/string.hpp>
+#include <cereal/types/unordered_map.hpp>
+
 class Settings;
 struct NoiseParams;
 
@@ -117,6 +124,16 @@ struct SettingsEntry {
 	std::string value = "";
 	Settings *group = nullptr;
 	bool is_group = false;
+
+	template <class Archive>
+	void serialize( Archive & ar )
+	{
+		if (is_group) {
+			ar(*group);
+		} else {
+			ar(value);
+		}
+	}
 };
 
 typedef std::unordered_map<std::string, SettingsEntry> SettingEntries;
@@ -143,8 +160,10 @@ public:
 
 	// Read configuration file.  Returns success.
 	bool readConfigFile(const char *filename);
+	bool readBinaryFile(const char *filename);
 	//Updates configuration file.  Returns success.
 	bool updateConfigFile(const char *filename);
+	bool updateBinaryFile(const char *filename);
 	// NOTE: Types of allowed_options are ignored.  Returns success.
 	bool parseCommandLine(int argc, char *argv[],
 			std::map<std::string, ValueSpec> &allowed_options);
@@ -179,7 +198,6 @@ public:
 	bool exists(const std::string &name) const;
 	// check if setting exists in this object ("locally")
 	bool existsLocal(const std::string &name) const;
-
 
 	/***************************************
 	 * Getters that don't throw exceptions *
@@ -295,4 +313,11 @@ private:
 	int m_settingslayer = -1;
 
 	static std::unordered_map<std::string, const FlagDesc *> s_flags;
+
+	friend class cereal::access;
+	template <class Archive>
+	void serialize( Archive & ar )
+	{
+		ar( m_settings );
+	}
 };

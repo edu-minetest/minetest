@@ -76,13 +76,17 @@ LuaSettings::LuaSettings(Settings *settings, const std::string &filename) :
 {
 }
 
-LuaSettings::LuaSettings(const std::string &filename, bool write_allowed) :
+LuaSettings::LuaSettings(const std::string &filename, bool write_allowed, bool is_bin) :
 	m_filename(filename),
 	m_is_own_settings(true),
-	m_write_allowed(write_allowed)
+	m_write_allowed(write_allowed),
+	m_is_bin(is_bin)
 {
 	m_settings = new Settings();
-	m_settings->readConfigFile(filename.c_str());
+	if (is_bin)
+		m_settings->readBinaryFile(filename.c_str());
+	else
+		m_settings->readConfigFile(filename.c_str());
 }
 
 LuaSettings::~LuaSettings()
@@ -286,7 +290,7 @@ int LuaSettings::l_write(lua_State* L)
 				" not allowed with mod security on.");
 	}
 
-	bool success = o->m_settings->updateConfigFile(o->m_filename.c_str());
+	bool success = o->m_is_bin ? o->m_settings->updateBinaryFile(o->m_filename.c_str()) : o->m_settings->updateConfigFile(o->m_filename.c_str()) ;
 	lua_pushboolean(L, success);
 
 	return 1;
@@ -345,8 +349,10 @@ int LuaSettings::create_object(lua_State* L)
 	NO_MAP_LOCK_REQUIRED;
 	bool write_allowed = true;
 	const char* filename = luaL_checkstring(L, 1);
+  bool is_bin = false;
+  if (lua_isboolean(L, 2)) is_bin = readParam<bool>(L, 2);
 	CHECK_SECURE_PATH_POSSIBLE_WRITE(L, filename, &write_allowed);
-	LuaSettings* o = new LuaSettings(filename, write_allowed);
+	LuaSettings* o = new LuaSettings(filename, write_allowed, is_bin);
 	*(void **)(lua_newuserdata(L, sizeof(void *))) = o;
 	luaL_getmetatable(L, className);
 	lua_setmetatable(L, -2);

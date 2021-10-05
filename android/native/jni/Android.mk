@@ -136,6 +136,7 @@ LOCAL_C_INCLUDES := \
 	../../src/script                             \
 	../../lib/gmp                                \
 	../../lib/jsoncpp                            \
+	../../lib/cereal/include                           \
 	deps/$(APP_ABI)/Curl/include                       \
 	deps/$(APP_ABI)/Freetype/include/freetype2         \
 	deps/$(APP_ABI)/Irrlicht/include                   \
