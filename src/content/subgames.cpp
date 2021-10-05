@@ -407,6 +407,26 @@ void loadGameConfAndInitWorld(const std::string &path, const std::string &name,
 			throw BaseException("Failed to update the config file");
 		}
 	}
+	else {
+    // TODO: Temporarily solve the problem that the game world cannot set static_spawnpoint, enable_damage and creative_mode via riceball.
+		Settings conf;
+
+		conf.readConfigFile(worldmt_path.c_str());
+
+		v3f spawnpoint;
+		if (conf.getV3FNoEx("static_spawnpoint", spawnpoint)) {
+      // apply the static spawnpoint in the world.mt config.
+			g_settings->setV3F("static_spawnpoint", spawnpoint);
+		}
+
+		if (!g_settings->_exists("creative_mode")) {
+			g_settings->setBool("creative_mode", conf.getBool("creative_mode"));
+		}
+
+		if (!g_settings->_exists("enable_damage")) {
+			g_settings->setBool("enable_damage", conf.getBool("enable_damage"));
+		}
+	}
 
 	// Create map_meta.txt if does not already exist
 	std::string map_meta_path = final_path + DIR_DELIM + "map_meta.txt";
