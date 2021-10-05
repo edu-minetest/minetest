@@ -292,6 +292,8 @@ if(NOT USE_LUAJIT)
 	add_subdirectory(lib/bitop)
 endif()
 
+find_package(Cereal REQUIRED)
+
 if(BUILD_BENCHMARKS)
 	add_subdirectory(lib/catch2)
 endif()

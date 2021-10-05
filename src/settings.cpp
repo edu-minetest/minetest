@@ -29,6 +29,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "debug.h"
 #include "log.h"
 #include "util/serialize.h"
+#include "serialization.h"
 #include "filesys.h"
 #include "noise.h"
 #include <cctype>
@@ -212,6 +213,28 @@ bool Settings::readConfigFile(const char *filename)
 	return parseConfigLines(is);
 }
 
+bool Settings::readBinaryFile(const char *filename)
+{
+	std::ifstream is(filename, std::ios::binary);
+	if (!is.good())
+		return false;
+	try
+	{
+		std::stringstream os;
+		decompressZlib(is, os);
+		cereal::PortableBinaryInputArchive archive(os);
+		archive(m_settings);
+	}
+	catch(const std::exception& e)
+	{
+		is.clear();
+		is.seekg(0);
+		cereal::PortableBinaryInputArchive archive(is);
+		archive(m_settings);
+	}
+
+	return true;
+}
 
 bool Settings::parseConfigLines(std::istream &is)
 {
@@ -401,6 +424,22 @@ bool Settings::updateConfigFile(const char *filename)
 	return true;
 }
 
+bool Settings::updateBinaryFile(const char *filename)
+{
+	MutexAutoLock lock(m_mutex);
+	// std::ofstream os(filename, std::ios::binary);
+	std::ostringstream os(std::ios_base::binary);
+	cereal::PortableBinaryOutputArchive archive(os);
+	archive(m_settings);
+	std::ostringstream uos(std::ios_base::binary);
+	compressZlib(os.str(), uos);
+	if (!fs::safeWriteToFile(filename, uos.str())) {
+		errorstream << "Error writing configuration file: \""
+			<< filename << "\"" << std::endl;
+		return false;
+	}
+	return true;
+}
 
 bool Settings::parseCommandLine(int argc, char *argv[],
 		std::map<std::string, ValueSpec> &allowed_options)
@@ -663,7 +702,6 @@ bool Settings::getNoiseParamsFromGroup(const std::string &name,
 
 	return true;
 }
-
 
 bool Settings::exists(const std::string &name) const
 {
