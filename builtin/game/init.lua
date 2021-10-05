@@ -36,6 +36,7 @@ dofile(gamepath .. "forceloading.lua")
 dofile(gamepath .. "statbars.lua")
 dofile(gamepath .. "knockback.lua")
 dofile(gamepath .. "async.lua")
+dofile(gamepath .. "teacher.lua")
 
 core.after(0, builtin_shared.cache_content_ids)
 
