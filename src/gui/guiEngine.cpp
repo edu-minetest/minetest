@@ -500,19 +500,18 @@ void GUIEngine::drawHeader(video::IVideoDriver *driver)
 	v2s32 splashsize(((f32)texture->getOriginalSize().Width) * mult,
 			((f32)texture->getOriginalSize().Height) * mult);
 
-	// Don't draw the header if there isn't enough room
-	s32 free_space = (((s32)screensize.Height)-320)/2;
-
-	if (free_space > splashsize.Y) {
-		core::rect<s32> splashrect(0, 0, splashsize.X, splashsize.Y);
-		splashrect += v2s32((screensize.Width/2)-(splashsize.X/2),
-				((free_space/2)-splashsize.Y/2)+10);
+	// Always draw the header for draw2DImageFilterScaled now
+	core::rect<s32> splashrect(0, 0, splashsize.X, splashsize.Y);
+	if ((unsigned)splashsize.X < screensize.Width) {
+		splashrect += v2s32((screensize.Width/2)-(splashsize.X/2), +16);
+	} else {
+		splashrect += v2s32(0, +16);
+	}
 
 	draw2DImageFilterScaled(driver, texture, splashrect,
 		core::rect<s32>(core::position2d<s32>(0,0),
 		core::dimension2di(texture->getOriginalSize())),
 		NULL, NULL, true);
-	}
 }
 
 /******************************************************************************/
@@ -532,19 +531,20 @@ void GUIEngine::drawFooter(video::IVideoDriver *driver)
 	v2s32 footersize(((f32)texture->getOriginalSize().Width) * mult,
 			((f32)texture->getOriginalSize().Height) * mult);
 
-	// Don't draw the footer if there isn't enough room
-	s32 free_space = (((s32)screensize.Height)-320)/2;
+	// Always draw the footer for draw2DImageFilterScaled now
+	core::rect<s32> rect(0,0,footersize.X,footersize.Y);
 
-	if (free_space > footersize.Y) {
-		core::rect<s32> rect(0,0,footersize.X,footersize.Y);
+	if ((unsigned)footersize.X < screensize.Width) {
 		rect += v2s32(screensize.Width/2,screensize.Height-footersize.Y);
 		rect -= v2s32(footersize.X/2, 0);
-
-		draw2DImageFilterScaled(driver, texture, rect,
-			core::rect<s32>(core::position2d<s32>(0,0),
-			core::dimension2di(texture->getOriginalSize())),
-			NULL, NULL, true);
+	} else {
+		rect += v2s32(0, screensize.Height-footersize.Y);
 	}
+
+	draw2DImageFilterScaled(driver, texture, rect,
+		core::rect<s32>(core::position2d<s32>(0,0),
+		core::dimension2di(texture->getOriginalSize())),
+		NULL, NULL, true);
 }
 
 /******************************************************************************/
