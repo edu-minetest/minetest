@@ -132,23 +132,39 @@ msgstr "我们只支持协议版本 $1。"
 msgid "We support protocol versions between version $1 and $2."
 msgstr "我们支持的协议版本为 $1 至 $2。"
 
+#: builtin/mainmenu/dlg_change_passwd.lua src/gui/guiPasswordChange.cpp
+msgid "New Password"
+msgstr "新密码"
+
+#: builtin/mainmenu/dlg_change_passwd.lua builtin/mainmenu/dlg_input_passwd.lua
+msgid "Ok"
+msgstr "确定"
+
+#: builtin/mainmenu/dlg_change_passwd.lua src/gui/guiPasswordChange.cpp
+msgid "Old Password"
+msgstr "旧密码"
+
+#: builtin/mainmenu/dlg_change_passwd.lua builtin/mainmenu/dlg_input_passwd.lua
+msgid "Password wrong"
+msgstr "密码错误"
+
 #: builtin/mainmenu/dlg_config_world.lua
 msgid "(Enabled, has error)"
 msgstr "（已启用，出错）"
 
-#: builtin/mainmenu/dlg_config_world.lua
-msgid "(Unsatisfied)"
-msgstr "（不满足）"
-
-#: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_contentstore.lua
-#: builtin/mainmenu/dlg_create_world.lua
+#: builtin/mainmenu/dlg_change_passwd.lua builtin/mainmenu/dlg_config_world.lua
+#: builtin/mainmenu/dlg_contentstore.lua builtin/mainmenu/dlg_create_world.lua
 #: builtin/mainmenu/dlg_delete_content.lua
-#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/dlg_register.lua
-#: builtin/mainmenu/dlg_rename_modpack.lua
+#: builtin/mainmenu/dlg_delete_world.lua builtin/mainmenu/dlg_input_passwd.lua
+#: builtin/mainmenu/dlg_register.lua builtin/mainmenu/dlg_rename_modpack.lua
 #: builtin/mainmenu/dlg_settings_advanced.lua src/client/keycode.cpp
 #: src/gui/guiKeyChangeMenu.cpp src/gui/guiPasswordChange.cpp
 msgid "Cancel"
 msgstr "取消"
+
+#: builtin/mainmenu/dlg_config_world.lua
+msgid "(Unsatisfied)"
+msgstr "（不满足）"
 
 #: builtin/mainmenu/dlg_config_world.lua builtin/mainmenu/dlg_contentstore.lua
 #: builtin/mainmenu/tab_content.lua
@@ -210,7 +226,8 @@ msgid "Optional dependencies:"
 msgstr "可选依赖项："
 
 #: builtin/mainmenu/dlg_config_world.lua
-#: builtin/mainmenu/dlg_settings_advanced.lua src/gui/guiKeyChangeMenu.cpp
+#: builtin/mainmenu/dlg_settings_advanced.lua builtin/mainmenu/tab_teacher.lua
+#: src/gui/guiKeyChangeMenu.cpp
 msgid "Save"
 msgstr "保存"
 
@@ -577,6 +594,71 @@ msgstr "pkgmgr：MOD 路径 “$1” 无效"
 msgid "Delete World \"$1\"?"
 msgstr "删除世界“$1”？"
 
+#: builtin/mainmenu/dlg_input_passwd.lua builtin/mainmenu/dlg_register.lua
+#: builtin/mainmenu/tab_online.lua
+msgid "Password"
+msgstr "密码"
+
+#: builtin/mainmenu/dlg_play_game.lua
+msgid "Ask the teacher to configure the game server address"
+msgstr "请让老师配置游戏服务器地址"
+
+#: builtin/mainmenu/dlg_play_game.lua builtin/mainmenu/tab_teacher.lua
+#: src/client/game.cpp
+msgid "Change Password"
+msgstr "更改密码"
+
+#: builtin/mainmenu/dlg_play_game.lua
+msgid "Enter Teacher Mode"
+msgstr "进入教师模式"
+
+#: builtin/mainmenu/dlg_play_game.lua src/settings_translation_file.cpp
+msgid "Mute sound"
+msgstr "静音"
+
+#: builtin/mainmenu/dlg_play_game.lua builtin/mainmenu/dlg_register.lua
+#: builtin/mainmenu/tab_online.lua
+msgid "Name"
+msgstr "名称"
+
+#: builtin/mainmenu/dlg_play_game.lua
+msgid "Play Local Game"
+msgstr "开始单人游戏"
+
+#: builtin/mainmenu/dlg_play_game.lua
+msgid "Play Remote Game"
+msgstr "开始多人游戏"
+
+#: builtin/mainmenu/dlg_play_game.lua
+msgid "Play(local)"
+msgstr "开始(单人)游戏"
+
+#: builtin/mainmenu/dlg_play_game.lua
+msgid "Play(online)"
+msgstr "开始(多人)游戏"
+
+#: builtin/mainmenu/dlg_play_game.lua
+msgid ""
+"Please check that name only contains allowed characters: 'a' to 'z', 'A' to "
+"'Z', '0' to '9', '-', '_'"
+msgstr "用户名无效：名称只允许字母数字下划线和减号: a-z, A-Z, 0-9, -, _"
+
+#: builtin/mainmenu/dlg_play_game.lua
+msgid "Student name should not be same as the teacher"
+msgstr ""
+
+#: builtin/mainmenu/dlg_play_game.lua builtin/mainmenu/tab_teacher.lua
+msgid "Teacher"
+msgstr "教师模式"
+
+#: builtin/mainmenu/dlg_play_game.lua
+msgid "User name length cannot exceed 20"
+msgstr "名称长度不能超过20个字符"
+
+#: builtin/mainmenu/dlg_play_game.lua
+msgid "name is empty"
+msgstr "请输入名称"
+
 #: builtin/mainmenu/dlg_register.lua src/gui/guiPasswordChange.cpp
 msgid "Confirm Password"
 msgstr "确认密码"
@@ -588,16 +670,6 @@ msgstr "加入 $1"
 #: builtin/mainmenu/dlg_register.lua
 msgid "Missing name"
 msgstr "缺失名称"
-
-#: builtin/mainmenu/dlg_register.lua builtin/mainmenu/tab_local.lua
-#: builtin/mainmenu/tab_online.lua
-msgid "Name"
-msgstr "名称"
-
-#: builtin/mainmenu/dlg_register.lua builtin/mainmenu/tab_local.lua
-#: builtin/mainmenu/tab_online.lua
-msgid "Password"
-msgstr "密码"
 
 #: builtin/mainmenu/dlg_register.lua
 msgid "Passwords do not match"
@@ -854,7 +926,10 @@ msgstr "核心开发者"
 
 #: builtin/mainmenu/tab_about.lua
 msgid "Core Team"
-msgstr ""
+msgstr "核心团队"
+
+msgid "Music"
+msgstr "音乐"
 
 #: builtin/mainmenu/tab_about.lua
 msgid "Open User Data Directory"
@@ -961,6 +1036,7 @@ msgid "Play Game"
 msgstr "开始游戏"
 
 #: builtin/mainmenu/tab_local.lua builtin/mainmenu/tab_online.lua
+#: builtin/mainmenu/tab_teacher.lua
 msgid "Port"
 msgstr "端口"
 
@@ -1205,13 +1281,33 @@ msgstr "摇动流体"
 msgid "Waving Plants"
 msgstr "摇摆植物"
 
+#: builtin/mainmenu/tab_teacher.lua
+msgid "Allow Local Play"
+msgstr "允许本地游戏"
+
+#: builtin/mainmenu/tab_teacher.lua
+msgid "Allow Remote Play"
+msgstr "允许远程游戏"
+
+#: builtin/mainmenu/tab_teacher.lua src/settings_translation_file.cpp
+msgid "Server address"
+msgstr "服务器地址"
+
+#: builtin/mainmenu/tab_teacher.lua
+msgid "Student Mode"
+msgstr "学生模式"
+
+#: builtin/mainmenu/tab_teacher.lua
+msgid "Teacher Name"
+msgstr "教师登录名"
+
 #: src/client/client.cpp
 msgid "Connection aborted (protocol error?)."
 msgstr "连接中断（协议错误？）。"
 
 #: src/client/client.cpp src/client/game.cpp
 msgid "Connection timed out."
-msgstr "连接超时。"
+msgstr "连接超时，请联系你的老师开启游戏服务。"
 
 #: src/client/client.cpp
 msgid "Done!"
@@ -1238,8 +1334,9 @@ msgid "Connection error (timed out?)"
 msgstr "连接出错（超时？）"
 
 #: src/client/clientlauncher.cpp
+#, fuzzy
 msgid "Could not find or load game: "
-msgstr "找不到子游戏或者无法载入子游戏： "
+msgstr "无法找到或者载入游戏 \""
 
 #: src/client/clientlauncher.cpp
 msgid "Invalid gamespec."
@@ -1347,10 +1444,6 @@ msgstr "已启用镜头更新"
 #, fuzzy
 msgid "Can't show block bounds (disabled by mod or game)"
 msgstr "无法显示方块的边界 （需要“basic_debug”权限）"
-
-#: src/client/game.cpp
-msgid "Change Password"
-msgstr "更改密码"
 
 #: src/client/game.cpp
 msgid "Cinematic mode disabled"
@@ -2168,14 +2261,7 @@ msgid "Change"
 msgstr "更改"
 
 #: src/gui/guiPasswordChange.cpp
-msgid "New Password"
-msgstr "新密码"
-
-#: src/gui/guiPasswordChange.cpp
-msgid "Old Password"
-msgstr "旧密码"
-
-#: src/gui/guiPasswordChange.cpp
+#, fuzzy
 msgid "Passwords do not match!"
 msgstr "密码不匹配！"
 
@@ -3023,7 +3109,6 @@ msgid "Crosshair alpha"
 msgstr "准星透明"
 
 #: src/settings_translation_file.cpp
-#, fuzzy
 msgid ""
 "Crosshair alpha (opaqueness, between 0 and 255).\n"
 "This also applies to the object crosshair."
@@ -5642,10 +5727,6 @@ msgid "Server URL"
 msgstr "服务器 URL"
 
 #: src/settings_translation_file.cpp
-msgid "Server address"
-msgstr "服务器地址"
-
-#: src/settings_translation_file.cpp
 msgid "Server description"
 msgstr "服务器描述"
 
@@ -7907,9 +7988,6 @@ msgstr "cURL 并发限制"
 #~ msgid "Number of parallax occlusion iterations."
 #~ msgstr "视差遮蔽迭代数。"
 
-#~ msgid "Ok"
-#~ msgstr "确定"
-
 #~ msgid ""
 #~ "Opaqueness (alpha) of the shadow behind the fallback font, between 0 and "
 #~ "255."
@@ -7984,6 +8062,10 @@ msgstr "cURL 并发限制"
 
 #~ msgid "Server / Singleplayer"
 #~ msgstr "服务器 / 单人游戏"
+
+#, fuzzy
+#~ msgid "Server Address"
+#~ msgstr "服务器地址"
 
 #~ msgid ""
 #~ "Set the shadow update time.\n"
