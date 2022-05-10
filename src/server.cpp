@@ -255,6 +255,10 @@ Server::Server(
 	m_on_shutdown_errmsg(on_shutdown_errmsg),
 	m_modchannel_mgr(new ModChannelMgr())
 {
+	m_path_mod_data = porting::path_user + DIR_DELIM "mod_data";
+	if (!fs::CreateDir(m_path_mod_data))
+		throw ServerError("Failed to create common dir");
+
 	if (m_path_world.empty())
 		throw ServerError("Supplied empty world path");
 

@@ -686,7 +686,7 @@ bool ScriptApiSecurity::checkPath(lua_State *L, const char *path,
 						const char *message =
 								"Writing to mod directories is deprecated, as any changes "
 								"will be overwritten when updating content. "
-								"Use minetest.get_commonpath() instead.";
+								"Use minetest.get_mod_data_path() instead.";
 						log_deprecated(L, message, 1);
 					}
 
@@ -694,6 +694,13 @@ bool ScriptApiSecurity::checkPath(lua_State *L, const char *path,
 					return true;
 				}
 			}
+		}
+
+		// Allow write access to own mod data dir
+		str = fs::AbsolutePath(gamedef->getModDataPath() + DIR_DELIM + mod_name);
+		if (!str.empty() && fs::PathStartsWith(abs_path, str)) {
+			if (write_allowed) *write_allowed = true;
+			return true;
 		}
 	}
 
@@ -717,6 +724,12 @@ bool ScriptApiSecurity::checkPath(lua_State *L, const char *path,
 				return true;
 			}
 		}
+	}
+
+	// Allow read access to all mod common dirs
+	str = fs::AbsolutePath(gamedef->getModDataPath());
+	if (!str.empty() && fs::PathStartsWith(abs_path, str)) {
+		return true;
 	}
 
 	str = fs::AbsolutePath(gamedef->getWorldPath());
