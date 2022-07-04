@@ -33,8 +33,8 @@ if(NOT USE_SYSTEM_CEREAL)
 endif()
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(CEREAL DEFAULT_MSG CEREAL_INCLUDE_DIR)
-if(WIN32)
+find_package_handle_standard_args(Cereal DEFAULT_MSG CEREAL_INCLUDE_DIR)
+# if(WIN32)
   # must add this when cross-compile
   include_directories("${CEREAL_INCLUDE_DIR}")
-endif()
+# endif()
