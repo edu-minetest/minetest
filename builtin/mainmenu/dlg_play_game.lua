@@ -21,12 +21,12 @@ local esc = core.formspec_escape
 local escDefaultTexturedir = esc(defaulttexturedir)
 
 local default_worlds = {
-  {name = "default", game = "minetest", mg_name = "v7", seed = "15823438331521897617"},
+  {name = "default", game = "minetest", mg_name = "v7", fixed_map_seed = "15823438331521897617", mgv7_spflags = "caverns,floatlands,ridges,mountains"},
   {name = "tutorial", game = "tutorial", mg_name = "singlenode"},
-  -- {name = "World 2", mg_name = "v7", seed = "1841722166046826822"},
-  -- {name = "World 3", mg_name = "v7", seed = "CC"},
-  -- {name = "World 4", mg_name = "valleys", seed = "8572"},
-  -- {name = "World 5 Flat", mg_name = "flat", seed = "2"}
+  -- {name = "World 2", mg_name = "v7", fixed_map_seed = "1841722166046826822"},
+  -- {name = "World 3", mg_name = "v7", fixed_map_seed = "CC"},
+  -- {name = "World 4", mg_name = "valleys", fixed_map_seed = "8572"},
+  -- {name = "World 5 Flat", mg_name = "flat", fixed_map_seed = "2"}
 }
 
 local enable_default_mods = dofile(menupath .. DIR_DELIM .. "enable_default_mods.lua")
@@ -198,9 +198,9 @@ local function create_default_worlds()
   for _, world in ipairs(default_worlds) do
     local _, gameindex = pkgmgr.find_by_gameid(world.game)
     if gameindex ~= nil and not menudata.worldlist:uid_exists_raw(world.name) then
-      if world.seed ~= nil then core.settings:set("fixed_map_seed", world.seed) end
-      core.settings:set("mg_name", world.mg_name)
-      local msg = core.create_world(world.name, gameindex)
+      -- if world.fixed_map_seed ~= nil then core.settings:set("fixed_map_seed", world.fixed_map_seed) end
+      -- core.settings:set("mg_name", world.mg_name)
+      local msg = core.create_world(world.name, gameindex, world)
       if msg ~= nil then
         gamedata.errormessage = msg
         break
