@@ -18,12 +18,29 @@
 local esc = core.formspec_escape
 local escDefaultTexturedir = esc(defaulttexturedir)
 
+local function indexOf(list, value)
+  for i, v in ipairs(list) do
+    if v == value then return i end
+  end
+end
+
 local function loadTeacherSettings()
   local allowLocalPlay = getTeacherConf("teacher_allow_local_play", true, "bool")
   local allowRemotePlay = getTeacherConf("teacher_allow_remote_play", false, "bool")
   local teacherName = core.settings:get("teacher_name") or "teacher"
   local host = core.settings:get("teacher_host") or ""
   local port = core.settings:get("teacher_port") or "30000"
+  local langs = core.settings:get("teacher_langs") or ",zh_CN,zh_TW,en"
+  local lang = core.settings:get("language") or ""
+  local langIndex = indexOf(string.split(langs, ","), lang)
+  if langIndex == nil then
+    if lang ~= "" then
+      langs = langs .. "," .. lang
+      langIndex = indexOf(string.split(langs, ","), lang)
+    else
+      langIndex = 1
+    end
+  end
   local password = getTeacherPasswd()
 
   return {
@@ -33,6 +50,9 @@ local function loadTeacherSettings()
     password = password,
     host = host,
     port = port,
+    langs = langs,
+    lang = lang,
+    langIndex = langIndex,
   }
 end
 
@@ -63,6 +83,10 @@ local function saveTeacherSettings(fields)
   if v ~= nil and v ~= "" then
     core.settings:set("teacher_port", v)
   end
+  v = fields["lang"]
+  if v ~= nil and v ~= "" then
+    core.settings:set("language", v)
+  end
 end
 
 local currentSettings = loadTeacherSettings()
@@ -73,6 +97,7 @@ local function get_formspec(tabview, name, tabdata)
   -- local teacherName = core.settings:get("teacher_name") or ""
   -- local host = core.settings:get("teacher_host") or ""
   -- local port = core.settings:get("teacher_port") or "30000"
+  local langHint = fgettext("Set the language. Leave empty to use the system language.\nA restart is required after changing this."):gsub("\n", "")
 
   local retval =
     "field[0.1,0.5;3,0.6;teacherName;"..fgettext("Teacher Name") ..";".. esc(settings.teacherName) .."]" ..
@@ -81,6 +106,9 @@ local function get_formspec(tabview, name, tabdata)
     "field[4.1,1.6;1.8,0.6;port;"..fgettext("Port")..";".. esc(settings.port) .. "]" ..
     "checkbox[0,1.7;allowLocalPlay;"..fgettext("Allow Local Play") ..";".. dump(settings.allowLocalPlay) .. "]" ..
     "checkbox[0,2.2;allowRemotePlay;"..fgettext("Allow Remote Play") ..";".. dump(settings.allowRemotePlay) .. "]" ..
+    "label[0,2.7;" .. fgettext("Language") .."]" ..
+    "dropdown[0.8,2.8;1;lang;".. settings.langs ..";".. settings.langIndex .. ";false]" ..
+    "label[1.8,2.7;" .. langHint .."]" ..
     "button[8.9,5;3,0.8;btnStudentMode;".. fgettext("Student Mode") .."]" ..
     "button[5.9,5;3,0.8;btnSave;".. fgettext("Save") .."]"
 
@@ -109,6 +137,11 @@ local function main_button_handler(this, fields, name, tabdata)
   v = fields["port"]
   if v ~= nil and v ~= settings.port then
     currentSettings.port = v
+  end
+
+  v = fields["lang"]
+  if v ~= nil and v ~= settings.lang then
+    currentSettings.lang = v
   end
 
   v = fields["teacherName"]
