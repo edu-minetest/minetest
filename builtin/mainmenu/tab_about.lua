@@ -134,10 +134,15 @@ return {
 	cbf_formspec = function(tabview, name, tabdata)
 		local logofile = defaulttexturedir .. "logo.png"
 		local version = core.get_version()
+		local verHash = version.hash or ""
+		if verHash ~= '' then
+			local s = string.split(verHash, "-")
+			verHash = "(" .. s[#s] .. ") "
+		end
 
 		local credit_list = {}
 		table.insert_all(credit_list, {
-			core.colorize("#ff0", "Minetest Edu " .. fgettext("Core Developers"))
+			core.colorize("#ff0", "Minetest Edu" .. verHash  .. fgettext("Core Developers"))
 		})
 		prepare_credits(credit_list, edu_core_developers)
 		table.insert_all(credit_list, {
@@ -179,13 +184,10 @@ return {
 		-- account for the visible portion
 		scroll_height = math.max(0, scroll_height - 6.9)
 
-		local verHash = version.hash or ""
-		if verHash ~= '' then verHash = "-" .. verHash end
-
 		local fs = "image[1.5,0.6;2.5,2.5;" .. core.formspec_escape(logofile) .. "]" ..
 			"style[label_button;border=false]" ..
 			"button[0.1,3.4;5.3,0.5;label_button;" ..
-			core.formspec_escape(version.project .. " " .. version.string .. verHash) .. "]" ..
+			core.formspec_escape(version.project .. " " .. version.string) .. "]" ..
 			"button[1.5,4.1;2.5,0.8;homepage;minetest.net]" ..
 			"scroll_container[5.5,0.1;9.5,6.9;scroll_credits;vertical;" ..
 			tostring(scroll_height / 1000) .. "]" .. credit_fs ..
