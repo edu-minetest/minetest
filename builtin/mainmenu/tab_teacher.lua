@@ -106,9 +106,9 @@ local function get_formspec(tabview, name, tabdata)
     "field[4.1,1.6;1.8,0.6;port;"..fgettext("Port")..";".. esc(settings.port) .. "]" ..
     "checkbox[0,1.7;allowLocalPlay;"..fgettext("Allow Local Play") ..";".. dump(settings.allowLocalPlay) .. "]" ..
     "checkbox[0,2.2;allowRemotePlay;"..fgettext("Allow Remote Play") ..";".. dump(settings.allowRemotePlay) .. "]" ..
-    "label[0,2.7;" .. fgettext("Language") .."]" ..
-    "dropdown[0.8,2.8;1;lang;".. settings.langs ..";".. settings.langIndex .. ";false]" ..
-    "label[1.8,2.7;" .. langHint .."]" ..
+    "label[0,2.9;" .. fgettext("Language") .."]" ..
+    "dropdown[0.8,3;1;lang;".. settings.langs ..";".. settings.langIndex .. ";false]" ..
+    "label[1.8,2.9;" .. langHint .."]" ..
     "button[8.9,5;3,0.8;btnStudentMode;".. fgettext("Student Mode") .."]" ..
     "button[5.9,5;3,0.8;btnSave;".. fgettext("Save") .."]"
 
