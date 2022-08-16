@@ -69,7 +69,8 @@ local function get_formspec(data)
   retval = retval ..
   " field[10.2,0.8;3,0.8;name;".. fgettext("Name") ..";".. esc(core.settings:get("student_name") or "student") ..
   "]" ..
-  "button[13.28,0.8;2.48,0.8;btnPasswd;".. fgettext("Change Password") .. "]"
+  "button[13.28,0.8;2.48,0.8;btnPasswd;".. fgettext("Password") .. "]" ..
+  "tooltip[btnPasswd;"..fgettext("Change Password").."]"
 
   retval = retval ..
   "checkbox[10.2,2;mute;"..fgettext("Mute sound")..";" ..dump(muteSound).. "]"
