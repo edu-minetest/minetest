@@ -29,6 +29,7 @@ function mm_game_theme.init()
 	mm_game_theme.gameid = nil
 
 	mm_game_theme.music_handle = nil
+	mm_game_theme.reset()
 end
 
 --------------------------------------------------------------------------------
