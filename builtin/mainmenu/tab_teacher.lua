@@ -30,7 +30,7 @@ local function loadTeacherSettings()
   local teacherName = core.settings:get("teacher_name") or "teacher"
   local host = core.settings:get("teacher_host") or ""
   local port = core.settings:get("teacher_port") or "30000"
-  local langs = core.settings:get("teacher_langs") or ",zh_CN,zh_TW,en"
+  local langs = core.settings:get("teacher_langs") or " ,zh_CN,zh_TW,en"
   local lang = core.settings:get("language") or ""
   local langIndex = indexOf(string.split(langs, ","), lang)
   if langIndex == nil then
