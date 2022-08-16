@@ -103,8 +103,12 @@ function mm_game_theme.update_game(gamedetails)
 		end
 	end
 
+	mm_game_theme.set_generic("footer")
+	mm_game_theme.set_generic("header")
+	--[[
 	mm_game_theme.set_game("footer",gamedetails)
 	mm_game_theme.set_game("header",gamedetails)
+	--]]
 
 	mm_game_theme.gameid = gamedetails.id
 end
