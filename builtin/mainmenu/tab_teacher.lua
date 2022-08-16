@@ -101,7 +101,8 @@ local function get_formspec(tabview, name, tabdata)
 
   local retval =
     "field[0.1,0.5;3,0.6;teacherName;"..fgettext("Teacher Name") ..";".. esc(settings.teacherName) .."]" ..
-    "button[2.65,0.2;3,0.6;btnChangePwd;"..fgettext("Change Password").."]" ..
+    "button[2.65,0.2;3,0.6;btnChangePwd;"..fgettext("Password").."]" ..
+    "tooltip[btnChangePwd;"..fgettext("Change Password").."]" ..
     "field[0.1,1.6;4.2,0.6;address;".. fgettext("Server address") ..";".. esc(settings.host) .. "]" ..
     "field[4.1,1.6;1.8,0.6;port;"..fgettext("Port")..";".. esc(settings.port) .. "]" ..
     "checkbox[0,1.7;allowLocalPlay;"..fgettext("Allow Local Play") ..";".. dump(settings.allowLocalPlay) .. "]" ..
