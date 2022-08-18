@@ -1,4 +1,5 @@
 local client_path = core.get_user_path() .. DIR_DELIM .. "client" .. DIR_DELIM
+assert(core.create_dir(client_path))
 
 local settings = Settings(client_path .. "teacher", true)
 
