@@ -1,6 +1,6 @@
-local clientmod_path = core.get_clientmodpath()
+local client_path = core.get_user_path() .. DIR_DELIM .. "client" .. DIR_DELIM
 
-local settings = Settings(clientmod_path .. DIR_DELIM .. "teacher", true)
+local settings = Settings(client_path .. "teacher", true)
 
 function getTeacherConf(key, default, type)
   if type == 'bool' then
