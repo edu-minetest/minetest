@@ -16,6 +16,8 @@ Parents/teachers need to manage the content of the game, as well as control the 
 
 https://github.com/edu-minetest/minetest/releases/
 
+The Default Key For Parents/Teacher: double seven, double eight and double nine.
+
 ### Source
 
 This branch (`Release`) is only created for releases.
