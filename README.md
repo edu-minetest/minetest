@@ -1,3 +1,5 @@
+[English](./README.en.md)
+
 ## 什么是 《莽兜世界:教育版》
 
 《[莽兜世界:教育版](./)》是基于[Minetest][minetest]（一款开源体素游戏引擎）打造的开源互动教育世界应用。
@@ -38,6 +40,7 @@
 - [X] 分离游玩界面和游玩世界管理界面
 - [X] 控制游戏时间，保护孩子的眼睛
 - [X] 在游玩的间隙插入练习
+- [X] 单机游戏支持不同用户使用共用电脑
 - [ ] 文字编写互动教育世界教案课程(待实现`Text To Game`)
 
 
@@ -102,6 +105,7 @@
 * `edu/drawHeader`: 修正drawHeader
 * `edu/static_spawnpoint`: 修正出生点问题
 * `edu/android/client-translation`: 修正android默认中文问题
+* `feat/singleplayer-user`: 支持多用户在单机游戏中
 
 ## 源代码版权声明
 
