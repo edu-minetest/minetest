@@ -86,6 +86,7 @@
 
 ## 下载
 
+国外: https://github.com/edu-minetest/minetest/releases/
 国内镜像: https://gitee.com/mt-edu/minetest/releases
 
 ## 源代码地址
