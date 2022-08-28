@@ -68,7 +68,7 @@
   - 不支持控制游戏时间
   - 不支持游戏内容管理
   - 不支持游玩的间隙穿插练习
-- 《[莽兜世界:教育版](/)》:
+- 《[莽兜世界:教育版](./)》:
   - 本质是一可以离线运行的软件（无需注册登陆，无网也可用）
   - 自由(免费)的开源软件
     - 在遵循其开源版权许可证([LGPL3](https://www.gnu.org/licenses/lgpl-3.0.zh-cn.html))书前提下可对软体本身进行修改或改进
@@ -102,4 +102,9 @@
 * `edu/drawHeader`: 修正drawHeader
 * `edu/static_spawnpoint`: 修正出生点问题
 * `edu/android/client-translation`: 修正android默认中文问题
+
+## 源代码版权声明
+
+* [Minetest 体素游戏引擎](https://minetest.net/)遵循[LGPL2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)版权许可证
+* 《莽兜世界:教育版》遵循[LGPL3](https://www.gnu.org/licenses/lgpl-3.0.zh-cn.html)开源许可证
 
