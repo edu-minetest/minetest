@@ -2,7 +2,9 @@
 
 ## 什么是 《莽兜世界:教育版》
 
-《[莽兜世界:教育版](./)》是基于[Minetest][minetest]（一款开源体素游戏引擎）打造的开源互动教育世界应用。
+《[莽兜世界:教育版](https://edu.ihom.app)》是基于[Minetest][minetest]（一款开源体素游戏引擎）打造的开源互动教育世界应用。
+
+欢迎访问网站: https://edu.ihom.app 获得更多信息.
 
 ### [Minetest][minetest]的互动游戏世界
 
@@ -31,7 +33,7 @@
 [^5]: da, Rocha, Jhonata. [MineScratch: integração minetest-scratch para apoiar o ensino de programação [MineScratch: Minetest-Scratch Integration to Support Programming Teaching]](http://150.162.242.35/handle/123456789/171545). Repositório Institucional da UFSC. 2016-11-23 [2019-02-16]. （[原始内容存档](https://web.archive.org/web/20210203071244/http://150.162.242.35/handle/123456789/171545)于2021-02-03） （巴西葡萄牙语）.
 [^6]: Pauty-Combemorel C. [Utilisation d'un jeu vidéo dans le cadre de l'enseignement des SVT: le cas de Minetest. De 0 à 1 ou l'heure de l'informatique à l'école. [Using a video game as part of the teaching of Life and Earth Sciences: the case of Minetest. From 0 to 1 or computer time at school.]](https://hal.archives-ouvertes.fr/hal-01753090/document). 2018-02-07 [2019-10-11]. （[原始内容存档](https://web.archive.org/web/20191011091553/https://hal.archives-ouvertes.fr/hal-01753090/document)于2019-10-11） （法语）.
 
-### 《[莽兜世界:教育版](./)》的互动教育世界
+### 《[莽兜世界:教育版](https://edu.ihom.app)》的互动教育世界
 
 放任孩子在游戏世界中玩耍，并不能起到任何教育的作用。孩子在游戏世界的无脑玩法，是让人万万想不到: 从高处跳下自杀（孩子称之为蹦极），复活后，又跑去...这都能玩个不亦乐乎。
 
