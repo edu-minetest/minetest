@@ -26,13 +26,6 @@
 * 在巴西的圣卡塔琳娜州联邦大学，MineScratch（Minetest的变体）被用来教学[^5]
 * 在巴黎笛卡尔大学，Minetest用于向六年级的学生讲授生命和地球科学；这些学生无法亲自观察到某些现象，但可以在Minetest虚拟世界中体验到这些现象[^6]
 
-[^1]: [Open source game developer Perttu Ahola talks about Minetest with Wikinews](https://en.wikinews.org/wiki/Open_source_game_developer_Perttu_Ahola_talks_about_Minetest_with_Wikinews). Wikinews. 2020-06-30 [2020-07-11]. （[原始内容存档](https://web.archive.org/web/20200712073905/https://en.wikinews.org/wiki/Open_source_game_developer_Perttu_Ahola_talks_about_Minetest_with_Wikinews)于2020-07-12）.
-[^2]: Walsh, Greg; Donahue, Craig; Rhodes, Emily E. [KidCraft: Co-Designing within a Game Environment](https://mdsoar.org/bitstream/handle/11603/7723/KidCraft.pdf) (PDF). 2015 [2019-10-12]. （[原始内容存档](https://web.archive.org/web/20210203071241/https://mdsoar.org/bitstream/handle/11603/7723/KidCraft.pdf) (PDF)于2021-02-03） （英语）.
-[^3]: [Evaluation of existing resources (study/analysis)](http://www.taccle3.eu/wp-content/uploads/2017/12/20161024-O4-Evaluation-of-existing-resources-for-introducing-to-coding.pdf) (PDF). TACCLE 3 – Coding. 2016-10-24 [2019-02-16]. （[原始内容存档](https://web.archive.org/web/20180516205409/http://www.taccle3.eu/wp-content/uploads/2017/12/20161024-O4-Evaluation-of-existing-resources-for-introducing-to-coding.pdf) (PDF)于2018-05-16）.
-[^4]: Boutet, Henri. [Mathématiques et "serious gaming": l'exemple de Minetest [Mathematics and "serious gaming": the example of Minetest]](http://revue.sesamath.net/spip.php?article940). Mathématice. Num. 53. January 2017 [2019-10-12]. （[原始内容存档](https://web.archive.org/web/20190629075729/http://revue.sesamath.net/spip.php?article940)于2019-06-29） （法语）.
-[^5]: da, Rocha, Jhonata. [MineScratch: integração minetest-scratch para apoiar o ensino de programação [MineScratch: Minetest-Scratch Integration to Support Programming Teaching]](http://150.162.242.35/handle/123456789/171545). Repositório Institucional da UFSC. 2016-11-23 [2019-02-16]. （[原始内容存档](https://web.archive.org/web/20210203071244/http://150.162.242.35/handle/123456789/171545)于2021-02-03） （巴西葡萄牙语）.
-[^6]: Pauty-Combemorel C. [Utilisation d'un jeu vidéo dans le cadre de l'enseignement des SVT: le cas de Minetest. De 0 à 1 ou l'heure de l'informatique à l'école. [Using a video game as part of the teaching of Life and Earth Sciences: the case of Minetest. From 0 to 1 or computer time at school.]](https://hal.archives-ouvertes.fr/hal-01753090/document). 2018-02-07 [2019-10-11]. （[原始内容存档](https://web.archive.org/web/20191011091553/https://hal.archives-ouvertes.fr/hal-01753090/document)于2019-10-11） （法语）.
-
 ### 《[莽兜世界:教育版](https://edu.ihom.app)》的互动教育世界
 
 放任孩子在游戏世界中玩耍，并不能起到任何教育的作用。孩子在游戏世界的无脑玩法，是让人万万想不到: 从高处跳下自杀（孩子称之为蹦极），复活后，又跑去...这都能玩个不亦乐乎。
@@ -88,8 +81,8 @@
 
 ## 下载
 
-国外: https://github.com/edu-minetest/minetest/releases/
-国内镜像: https://gitee.com/mt-edu/minetest/releases
+* 国外: https://github.com/edu-minetest/minetest/releases/
+* 国内镜像: https://gitee.com/mt-edu/minetest/releases
 
 ## 源代码地址
 
@@ -115,3 +108,10 @@
 * [Minetest 体素游戏引擎](https://minetest.net/)遵循[LGPL2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)版权许可证
 * 《莽兜世界:教育版》遵循[LGPL3](https://www.gnu.org/licenses/lgpl-3.0.zh-cn.html)开源许可证
 
+
+[^1]: [Open source game developer Perttu Ahola talks about Minetest with Wikinews](https://en.wikinews.org/wiki/Open_source_game_developer_Perttu_Ahola_talks_about_Minetest_with_Wikinews). Wikinews. 2020-06-30 [2020-07-11]. （[原始内容存档](https://web.archive.org/web/20200712073905/https://en.wikinews.org/wiki/Open_source_game_developer_Perttu_Ahola_talks_about_Minetest_with_Wikinews)于2020-07-12）.
+[^2]: Walsh, Greg; Donahue, Craig; Rhodes, Emily E. [KidCraft: Co-Designing within a Game Environment](https://mdsoar.org/bitstream/handle/11603/7723/KidCraft.pdf) (PDF). 2015 [2019-10-12]. （[原始内容存档](https://web.archive.org/web/20210203071241/https://mdsoar.org/bitstream/handle/11603/7723/KidCraft.pdf) (PDF)于2021-02-03） （英语）.
+[^3]: [Evaluation of existing resources (study/analysis)](http://www.taccle3.eu/wp-content/uploads/2017/12/20161024-O4-Evaluation-of-existing-resources-for-introducing-to-coding.pdf) (PDF). TACCLE 3 – Coding. 2016-10-24 [2019-02-16]. （[原始内容存档](https://web.archive.org/web/20180516205409/http://www.taccle3.eu/wp-content/uploads/2017/12/20161024-O4-Evaluation-of-existing-resources-for-introducing-to-coding.pdf) (PDF)于2018-05-16）.
+[^4]: Boutet, Henri. [Mathématiques et "serious gaming": l'exemple de Minetest [Mathematics and "serious gaming": the example of Minetest]](http://revue.sesamath.net/spip.php?article940). Mathématice. Num. 53. January 2017 [2019-10-12]. （[原始内容存档](https://web.archive.org/web/20190629075729/http://revue.sesamath.net/spip.php?article940)于2019-06-29） （法语）.
+[^5]: da, Rocha, Jhonata. [MineScratch: integração minetest-scratch para apoiar o ensino de programação [MineScratch: Minetest-Scratch Integration to Support Programming Teaching]](http://150.162.242.35/handle/123456789/171545). Repositório Institucional da UFSC. 2016-11-23 [2019-02-16]. （[原始内容存档](https://web.archive.org/web/20210203071244/http://150.162.242.35/handle/123456789/171545)于2021-02-03） （巴西葡萄牙语）.
+[^6]: Pauty-Combemorel C. [Utilisation d'un jeu vidéo dans le cadre de l'enseignement des SVT: le cas de Minetest. De 0 à 1 ou l'heure de l'informatique à l'école. [Using a video game as part of the teaching of Life and Earth Sciences: the case of Minetest. From 0 to 1 or computer time at school.]](https://hal.archives-ouvertes.fr/hal-01753090/document). 2018-02-07 [2019-10-11]. （[原始内容存档](https://web.archive.org/web/20191011091553/https://hal.archives-ouvertes.fr/hal-01753090/document)于2019-10-11） （法语）.
