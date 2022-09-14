@@ -12,13 +12,20 @@
 
 ![blocks](imgs/numerica.png) ![sun rise](imgs/sunrise.jpg)
 
-#### 体验你所创造的“新世界”
+#### Experience(Enjoy) the "New World" You Created
 
 在互动世界里你可以用材料"积木"创建房子，农场，城市，工具和许多其他令人难以置信的创造性的事情。例如，金属矿开采，雕琢成锭，用于制作镐或其他物体不同的金属工具，然后用来建造建筑物,或者其他你可以想象的任何结构。而与成百上千元的乐高积木不同的是，你可以在你的创作里面走动，体验你所创造的新世界。例如，您可以构建和使用梯子，您可以将砂烧制成玻璃块，并将之作成窗户，透过这扇窗，能从你的门廊，看着 Minetest 世界中的方形太阳冉冉升起。
 
 [minetest]: https://minetest.net
 
-> 《Minetest》已在教育中[广泛用于教授数学，程序设计和地球科学等学科](https://zh.m.wikipedia.org/zh-hans/Minetest)。与同类应用程序相比而言，它的优势在于应用本身零成本,开放可定制，可在教室或研究等各类环境中进行大规模部署。此外，Minetest的图形引擎在低成本和低端硬件上表现[出色](https://en.wikinews.org/wiki/Open_source_game_developer_Perttu_Ahola_talks_about_Minetest_with_Wikinews)。
+>[维基百科]https://zh.m.wikipedia.org/zh-hans/Minetest《Minetest》已在教育中广泛用于教授数学，程序设计和地球科学等学科。与同类应用程序相比而言，它的优势在于应用本身零成本,开放可定制，可在教室或研究等各类环境中进行大规模部署。
+> 此外，Minetest的图形引擎在低成本和低端硬件上表现[出色](https://en.wikinews.org/wiki/Open_source_game_developer_Perttu_Ahola_talks_about_Minetest_with_Wikinews)。
+>
+> * Minetest被用作辅助设计工具，用于远程教学。
+> * Minetest用于向中小学生教授逻辑思维和调试。
+> * 2017年的法国，Minetest被用来教授微积分和三角学。
+> * 在巴西的圣卡塔琳娜州联邦大学，MineScratch（Minetest的变体）被用来教学。
+> * 2018年，在巴黎笛卡尔大学，Minetest用于向六年级的学生讲授生命和地球科学；这些学生无法亲自观察到某些现象，但可以在Minetest虚拟世界中体验到这些现象。
 
 ### 《[莽兜世界:教育版](https://edu.ihom.app)》的互动教育世界
 
