@@ -39,7 +39,7 @@ Parents/teachers need to manage the content of the game, as well as control the 
 | Target | Only for educational institutions, not open to individuals | Any(include Parents/teachers) are free to use |
 | Courses | About 700 online courses | Not Yet |
 | Modules | Not supported | Local built-in education-related modules (math, automation, electronic circuits, programming, etc.) and selected modules |
-| Self-Hosted service | Not supported | Can be self-hosted local network or Internet game service |
+| Self-Hosted service | Not supported | Can be self-hosted local network or Internet game service on linux server |
 | Game Time Control | Not Supported | Support Game Time Control |
 | Game Content Management | Not Supported | Support Game Content Management |
 | Interspersed practice | Not supported | Support interspersed practice during play |
