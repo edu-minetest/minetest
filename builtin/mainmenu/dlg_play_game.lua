@@ -201,7 +201,7 @@ local function create_default_worlds()
     if gameindex ~= nil and not menudata.worldlist:uid_exists_raw(world.name) then
       if world.seed ~= nil then core.settings:set("fixed_map_seed", world.seed) end
       core.settings:set("mg_name", world.mg_name)
-      local msg = core.create_world(world.name, gameindex, world)
+      local msg = core.create_world(world.name, world.game, world)
       if msg ~= nil then
         gamedata.errormessage = msg
         break
