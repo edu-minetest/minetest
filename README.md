@@ -44,6 +44,33 @@ Parents/teachers need to manage the content of the game, as well as control the 
 | Game Content Management | Not Supported | Support Game Content Management |
 | Interspersed practice | Not supported | Support interspersed practice during play |
 
+---
+
+- [Minecraft:Education Edit](https://education.minecraft.net/)：
+  - Essentially an online service (must be logged in before entering)
+  - Commercial software
+    - No modifications or improvements can be made to the software itself
+  - Only for educational institutions, not open to individuals (individuals must rely on institutions)
+  - 700 standards-compliant lessons built into the in-game library (not builtin, in-app download required)
+  - Course writing hassle: essentially built in-game
+  - ✘ No support self-hosted local network or Internet services (services can only be provided in the game)
+  - ✘ No support self-hosted local network or Internet services (services can only be provided in the game)
+  - ✘ No support controlling game time
+  - ✘ No support game content management
+  - ✘ Interspersed practice in game is not supported
+- Minetest:Education Edit：
+  - The essence is a software that can run offline (no registration required, no network is also available)
+  - Free (free) open source software
+    - The software can be modified or improved under the premise of following its open source copyright license ([LGPL3](https://www.gnu.org/licenses/lgpl-3.0.zh-cn.html))
+  - ✔ Anyone institutions/individuals, All (include Parents/Teachers) are free to use
+  - ✔ Modular architecture design
+  - ✔ Local built-in education related modules (mathematics, automation, electronic circuits, programming, etc.) and selected modules.
+  - ✘ No courses for now, you need to create your own
+  - ✔ Support local network or Internet game service on Linux server for multiplayer games (minetestserver)
+  - ✔ Support control game time
+  - ✔ Support game content management
+  - ✔ Support interspersed practice in-game
+
 ### Download
 
 https://github.com/edu-minetest/minetest/releases/
