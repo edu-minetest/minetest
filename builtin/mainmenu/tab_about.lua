@@ -138,6 +138,8 @@ return {
 		if verHash ~= '' then
 			local s = string.split(verHash, "-")
 			verHash = "(" .. s[#s] .. ") "
+		else
+			verHash =" "
 		end
 
 		local credit_list = {}
