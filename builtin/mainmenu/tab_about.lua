@@ -154,7 +154,7 @@ return {
 			"who died on February 1, 2023.",
 			"Our thoughts are with his family and friends.",
 			"",
-			core.colorize("#ff0", fgettext("Core Developers"))
+			core.colorize("#ff0", "Minetest " .. fgettext("Core Developers"))
 		})
 		prepare_credits(credit_list, core_developers)
 		table.insert_all(credit_list, {
