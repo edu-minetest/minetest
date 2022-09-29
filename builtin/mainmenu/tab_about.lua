@@ -145,7 +145,7 @@ return {
 		prepare_credits(credit_list, edu_core_developers)
 		table.insert_all(credit_list, {
 			"",
-			core.colorize("#ff0", fgettext("Core Developers"))
+			core.colorize("#ff0", "Minetest " .. fgettext("Core Developers"))
 		})
 		prepare_credits(credit_list, core_developers)
 		table.insert_all(credit_list, {
