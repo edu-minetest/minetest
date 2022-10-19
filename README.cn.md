@@ -42,6 +42,6 @@
 ## 源代码版权声明
 
 * [Minetest 体素游戏引擎](https://minetest.net/)遵循[LGPL2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)版权许可证
-* 《莽兜世界:教育版》遵循[LGPL3](https://www.gnu.org/licenses/lgpl-3.0.zh-cn.html)开源许可证
+* 《[莽兜世界:教育版](https://edu.ihom.app)》遵循[LGPL3](https://www.gnu.org/licenses/lgpl-3.0.zh-cn.html)开源许可证
 
 
