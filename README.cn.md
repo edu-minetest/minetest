@@ -18,15 +18,6 @@
 
 [minetest]: https://minetest.net
 
->[维基百科]https://zh.m.wikipedia.org/zh-hans/Minetest《Minetest》已在教育中广泛用于教授数学，程序设计和地球科学等学科。与同类应用程序相比而言，它的优势在于应用本身零成本,开放可定制，可在教室或研究等各类环境中进行大规模部署。
-> 此外，Minetest的图形引擎在低成本和低端硬件上表现[出色](https://en.wikinews.org/wiki/Open_source_game_developer_Perttu_Ahola_talks_about_Minetest_with_Wikinews)。
->
-> * Minetest被用作辅助设计工具，用于远程教学。
-> * Minetest用于向中小学生教授逻辑思维和调试。
-> * 2017年的法国，Minetest被用来教授微积分和三角学。
-> * 在巴西的圣卡塔琳娜州联邦大学，MineScratch（Minetest的变体）被用来教学。
-> * 2018年，在巴黎笛卡尔大学，Minetest用于向六年级的学生讲授生命和地球科学；这些学生无法亲自观察到某些现象，但可以在Minetest虚拟世界中体验到这些现象。
-
 ### 《[莽兜世界:教育版](https://edu.ihom.app)》的互动教育世界
 
 放任孩子在游戏世界中玩耍，并不能起到任何教育的作用。孩子在游戏世界的无脑玩法，是让人万万想不到: 从高处跳下自杀（孩子称之为蹦极），复活后，又跑去...这都能玩个不亦乐乎。
