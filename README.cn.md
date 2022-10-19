@@ -1,14 +1,17 @@
 [中文]|[English](./README.md)
 
+> 注: 因 Gitee 动不动说README可能含有违规内容,严格按照开源协议来的,说明出处,这就是违规?无法显示,甚至不指出哪里的问题!
+> README删减了多次,才终于有显示. 这里就只放发布版本了.仓库不作更新.
+
 ## 什么是 《莽兜世界:教育版》
 
 《[莽兜世界:教育版](https://edu.ihom.app)》是基于[Minetest][minetest]（一款开源体素游戏引擎）打造的开源互动教育世界应用。
 
 欢迎访问网站: https://edu.ihom.app 获得更多信息.
 
-### [Minetest][minetest]的互动游戏世界
+### [Minetest](https://minetest.net/)的互动游戏世界
 
-[Minetest][minetest]的“[体素](https://zh.m.wikipedia.org/zh-hans/體素)”概念类似于积木（如乐高积木）.在互动世界里你可以用"积木"创建房子、制作工具，而与价格昂贵的乐高积木不同的是，你可以在你的创作里面走动，体验你所创造的“新世界”。
+[Minetest](https://minetest.net/)的“[体素](https://zh.m.wikipedia.org/zh-hans/體素)”概念类似于积木（如乐高积木）.在互动世界里你可以用"积木"创建房子、制作工具，而与价格昂贵的乐高积木不同的是，你可以在你的创作里面走动，体验你所创造的“新世界”。
 
 ![blocks](imgs/numerica.png) ![sun rise](imgs/sunrise.jpg)
 
@@ -40,4 +43,5 @@
 
 * [Minetest 体素游戏引擎](https://minetest.net/)遵循[LGPL2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)版权许可证
 * 《莽兜世界:教育版》遵循[LGPL3](https://www.gnu.org/licenses/lgpl-3.0.zh-cn.html)开源许可证
+
 
