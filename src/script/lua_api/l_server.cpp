@@ -503,21 +503,20 @@ int ModApiServer::l_get_mod_data_path(lua_State *L)
 {
 	NO_MAP_LOCK_REQUIRED;
 
-	lua_rawgeti(L, LUA_REGISTRYINDEX, CUSTOM_RIDX_CURRENT_MOD_NAME);
-	if (!lua_isstring(L, -1)) {
+	std::string modname = ScriptApiSecurity::get_current_modname(L);
+
+	if (!modname.empty()) {
+		const Server *srv = getServer(L);
+		std::string path = srv->getModDataPath() + DIR_DELIM + modname;
+		if (!fs::CreateAllDirs(path)) {
+			throw LuaError("Failed to create dir");
+		}
+
+		lua_pushstring(L, path.c_str());
+		return 1;
+	} else {
 		return 0;
 	}
-
-	std::string modname = readParam<std::string>(L, -1);
-
-	const Server *srv = getServer(L);
-	std::string path = srv->getModDataPath() + DIR_DELIM + modname;
-	if (!fs::CreateAllDirs(path)) {
-		throw LuaError("Failed to create dir");
-	}
-
-	lua_pushstring(L, path.c_str());
-	return 1;
 }
 
 // sound_play(spec, parameters, [ephemeral])
