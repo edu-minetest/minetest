@@ -209,6 +209,7 @@ local function create_default_worlds()
         menudata.worldlist:refresh()
         if world.game ~= 'tutorial' then
           enable_default_mods(world.name)
+          core.settings:set("creative_mode", "true")
         end
       end
     end
