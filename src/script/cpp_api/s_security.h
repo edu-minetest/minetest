@@ -58,7 +58,6 @@ public:
 	static std::string get_current_modname(lua_State *L);
 	// The internal implementation of get_current_modname()
 	static int l_get_current_modname(lua_State *L);
-
 private:
 	int getThread(lua_State *L);
 	// sets the enviroment to the table thats on top of the stack
