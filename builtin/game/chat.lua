@@ -23,6 +23,20 @@ function core.format_chat_message(name, message)
 	local str = core.settings:get("chat_message_format")
 	local replaced
 
+	local player = core.get_player_by_name(name)
+	if player then
+		local nametag = player:get_nametag_attributes()
+		nametag = nametag and nametag.text
+		if nametag and #nametag then
+			name = "(" .. name .. ")"
+			if string.find(nametag, name) then
+				name = nametag
+			else
+				name = nametag .. name
+			end
+		end
+	end
+
 	-- Name
 	str, replaced = safe_gsub(str, "@name", name)
 	if not replaced then
