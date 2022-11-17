@@ -503,11 +503,17 @@ int ModApiServer::l_get_mod_data_path(lua_State *L)
 {
 	NO_MAP_LOCK_REQUIRED;
 
-	std::string modname = ScriptApiSecurity::get_current_modname(L);
+	std::string modname = luaL_checkstring(L, 1);
+
+	const ModSpec *mod = getGameDef(L)->getModSpec(modname);
+	if (!mod) {
+		modname = ScriptApiSecurity::get_current_modname(L);
+	}
 
 	if (!modname.empty()) {
 		const Server *srv = getServer(L);
 		std::string path = srv->getModDataPath() + DIR_DELIM + modname;
+		if (mod) CHECK_SECURE_PATH(L, path.c_str(), true);
 		if (!fs::CreateAllDirs(path)) {
 			throw LuaError("Failed to create dir");
 		}
