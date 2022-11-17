@@ -209,7 +209,6 @@ local function create_default_worlds()
         menudata.worldlist:refresh()
         if world.game ~= 'tutorial' then
           enable_default_mods(world.name)
-          core.settings:set("creative_mode", "true")
         end
       end
     end
@@ -226,6 +225,9 @@ local function create_default_worlds()
   else
     core.settings:remove("mg_name")
   end
+
+  -- defaults to creative_mode
+  core.settings:set("creative_mode", "true")
 
   local last_selected_world = tonumber(core.settings:get("mainmenu_last_selected_world") or 0)
   if last_selected_world < 1 then
