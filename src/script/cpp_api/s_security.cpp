@@ -753,12 +753,12 @@ bool ScriptApiSecurity::checkPath(lua_State *L, const char *path,
 				return true;
 			}
 		}
-	}
 
-	// Allow read access to all mod common dirs
-	str = fs::AbsolutePath(gamedef->getModDataPath());
-	if (!str.empty() && fs::PathStartsWith(abs_path, str)) {
-		return true;
+		// Allow read access to all mod common dirs
+		str = fs::AbsolutePath(gamedef->getModDataPath());
+		if (!str.empty() && fs::PathStartsWith(abs_path, str)) {
+			return true;
+		}
 	}
 
 	str = fs::AbsolutePath(gamedef->getWorldPath());
