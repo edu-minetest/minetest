@@ -1,0 +1,119 @@
+### v5.6.1-08cb5b125(2023-01-08)
+
+* temporarily disable `update_information_url`
+* 🆕️️ Added nickname (nickname) module, nickname can be in Chinese.
+* 🪲 Fix: Nametags are reset when calling `set_nametag_attributes`, even if text param is not touched.
+* 🪲 FIXED: chat interface should also use `nametag`.
+   * `core. format_chat_message(name, message)`
+* 🆕️️ Add `mod_data` directory (`minetest.get_mod_data_path`) to save mod configuration data
+   * It's useful for storing custom data *independently of worlds*.
+* 🪲 FIXED: The trusted mod can not use `mkdir` etc functions.
+* 🪲 FIXED: Mod directory cannot write files
+   * The directory where your mod is located should allow file writing.
+   * Background: Currently minetest only allows writing in the current world (course) directory, but I need to record students' learning in the same place, instead of dispersing the records in each world (course).
+   * [Security] The trusted mods are prohibited from using io functions. (branch: fix/trusted_mod_io)
+     * `ScriptApiSecurity::checkPath` can correctly get caller's mod name now.
+       * Allow writing to the directory where the mod is located,
+     * `ScriptApiSecurity::checkWhitelisted` can correctly get caller's mod name now.
+     * `ScriptApiSecurity::isSecure` uses `checkWhitelisted` now.
+       * The trusted mods can use the io functions directly.
+     * Add the static method `l_get_current_modname` and `get_current_modname` to `ScriptApiSecurity` class.
+     * `ModApiClient::get_current_modname` and `ModApiServer::get_current_modname` can correctly get caller's mod name.
+     * Can analyze whether the call is injected or not.
+     * Fixed: #12857, #12948
+* 🪲 Fix: The Chinese characters displayed in the prompt line of the chat window are squeezed together.
+* Modify the initial default configuration world to creative mode (does not affect the existing default configuration).
+* A little optimization of IME support under Linux and Windows systems
+* Update render engine IrrlichtMt to v1.9.0mt9
+
+
+### v5.6.1-2d4c67fd6(2022-10-15)
+
+* ⛔️ Fix (Win32): enable basic IME support, able to input Chinese
+* ⛔️ classroom mod does not work on unified_inventory inventory mod
+   * Preliminary localization completed
+* 🆕️️ `petz`  mod added
+* Update builtin-mods version
+* In prebuilt default worlds, all preinstalled mods are no longer enabled
+  * List of enabled mods
+    * `quiz`
+      * `quiz_ui`
+    * `3d_armor`
+    * `basic_materials`
+    * `basic_signs`
+    * `bedrock`
+    * `flow`
+    * `formspec_ast`
+    * `formspecs`
+    * `fslib`
+    * `handholds_redo`
+    * `moblib`
+    * `modlib`
+    * `mesecons`
+    * `signs_lib`
+    * `skinsdb`
+    * `visible_wielditem`
+    * `wielded_light`
+    * `worldedit`
+  * List of mods not enabled (need to be enabled manually)
+    * `accountmgr`
+    * `awards`
+    * `biofuel`
+    * `bonemeal`
+    * `ccompass`
+    * `classroom`
+    * `codeblock`
+    * `computertest`
+    * `digilines`
+    * `digistuff`
+    * `elevator`
+    * `go`
+    * `led_marquee`
+    * `lwcolorable`
+    * `lwcomponents`
+    * `lwcomponents_spawners`
+    * `lwcomputers`
+    * `lwroad_tracks`
+    * `lwscratch`
+    * `lwwires`
+    * `mathplot`
+    * `mesecons_x`
+    * `missions`
+    * `moreblocks`
+    * `more_chests`
+    * `moremesecons` mesecons
+    * `moreores`
+    * `numeracy`
+    * 🆕️️ `petz`
+    * `pipeworks`
+    * `pride_flags`
+      * `country_flags`
+    * `scriptblocks2`
+    * `street_signs`
+    * `technic`
+    * `tt`
+    * `tubelib2`
+    * `unifieddyes`
+    * `unified_inventory`
+      * `unified_inventory_plus`
+      * `unified_inventory_themes`
+    * `vbots`
+    * `vector3`
+    * `xp_redo`
+
+
+### v5.6.1-c35575a00(2022-09-25)
+
+* Upgrade to Minetest@5.6.1
+* Upgrade Installed Mods
+* Add classroom, accountmgr, mathplot, vbots, scriptblocks2, computertest, country flags etc mods
+
+### v5.5.1-76bfbb601(2022-08-28)
+
+* First public release
+* Upgrade to Minetest@5.5.1
+* Many improvements and bugfixes
+* Major improvements to the Quiz Player Challenge mod:
+  * 🆕️️ New four arithmetic operation answer type (type): `calc`
+  * 🆕️️ Text type answers now support [Lua character pattern matching](https://www.lua.org/pil/20.2.html), if the answer is `pattern matching` string, then the answer must use two `/` wrapped.
+
