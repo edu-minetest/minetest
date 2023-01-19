@@ -195,6 +195,10 @@ local function create_default_worlds()
   local old_map_seed = core.settings:get("fixed_map_seed")
   local old_mapgen = core.settings:get("mg_name")
 
+  -- defaults to creative_mode
+  -- the create_world() will use the `creative_mode` as default value.
+  core.settings:set("creative_mode", "true")
+
   -- Create the worlds
   for _, world in ipairs(default_worlds) do
     local _, gameindex = pkgmgr.find_by_gameid(world.game)
@@ -226,8 +230,8 @@ local function create_default_worlds()
     core.settings:remove("mg_name")
   end
 
-  -- defaults to creative_mode
-  core.settings:set("creative_mode", "true")
+  -- TODO: Disable update_information_url temporarily.
+  core.settings:set("update_information_url", "")
 
   local last_selected_world = tonumber(core.settings:get("mainmenu_last_selected_world") or 0)
   if last_selected_world < 1 then
