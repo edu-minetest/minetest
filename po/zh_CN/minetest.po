@@ -928,6 +928,10 @@ msgstr "核心开发者"
 msgid "Core Team"
 msgstr "核心团队"
 
+msgid "Minetest Education Edit Web"
+msgstr "莽兜世界教育板官网"
+
+#: builtin/mainmenu/tab_about.lua
 msgid "Music"
 msgstr "音乐"
 

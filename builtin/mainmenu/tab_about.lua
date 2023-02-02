@@ -190,7 +190,8 @@ return {
 			"style[label_button;border=false]" ..
 			"button[0.1,3.4;5.3,0.5;label_button;" ..
 			core.formspec_escape(version.project .. " " .. version.string) .. "]" ..
-			"button[1.5,4.1;2.5,0.8;homepage;minetest.net]" ..
+			"button[0.5,3.8;4.5,0.8;linkMtEdu;".. fgettext("Minetest Education Edit Web") .. "]" ..
+			"button[0.5,4.6;4.5,0.8;homepage;minetest.net]" ..
 			"scroll_container[5.5,0.1;9.5,6.9;scroll_credits;vertical;" ..
 			tostring(scroll_height / 1000) .. "]" .. credit_fs ..
 			"scroll_container_end[]"..
@@ -208,7 +209,7 @@ return {
 			fs = fs .. "tooltip[userdata;" ..
 					fgettext("Opens the directory that contains user-provided worlds, games, mods,\n" ..
 							"and texture packs in a file manager / explorer.") .. "]"
-			fs = fs .. "button[0.5,5.1;4.5,0.8;userdata;" .. fgettext("Open User Data Directory") .. "]"
+			fs = fs .. "button[0.5,5.4;4.5,0.8;userdata;" .. fgettext("Open User Data Directory") .. "]"
 		end
 
 		return fs, "size[15.5,7.1,false]real_coordinates[true]"
@@ -216,6 +217,10 @@ return {
 	cbf_button_handler = function(this, fields, name, tabdata)
 		if fields.homepage then
 			core.open_url("https://www.minetest.net")
+		end
+
+		if fields.linkMtEdu then
+			core.open_url("https://edu.ihom.app")
 		end
 
 		if fields.share_debug then
