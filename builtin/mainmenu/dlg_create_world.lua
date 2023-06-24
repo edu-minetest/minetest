@@ -389,20 +389,11 @@ local function create_world_buttonhandler(this, fields)
 			end
 
 			if message == nil then
-				local game = pkgmgr.games[gameindex]
 				local game_id = game.id
 				if (game_id == "minetest") then
 					menudata.worldlist:refresh()
 					enable_default_mods(worldname)
 				end
-				core.settings:set("menu_last_game",game_id)
-				if this.data.update_worldlist_filter then
-					menudata.worldlist:set_filtercriteria(game_id)
-					mm_game_theme.update("singleplayer", game)
-				end
-				menudata.worldlist:refresh()
-				core.settings:set("mainmenu_last_selected_world",
-									menudata.worldlist:raw_index_by_uid(worldname))
 			end
 		end
 

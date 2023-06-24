@@ -144,7 +144,8 @@ return {
 
 		local credit_list = {}
 		table.insert_all(credit_list, {
-			core.colorize("#ff0", "Minetest Edu" .. verHash  .. fgettext("Core Developers"))
+			core.colorize("#ff0", "Minetest Edu" .. verHash  .. fgettext("Core Developers")),
+			"",
 		})
 		prepare_credits(credit_list, edu_core_developers)
 		table.insert_all(credit_list, {
