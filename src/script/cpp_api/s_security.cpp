@@ -663,7 +663,6 @@ std::string inline _get_real_caller_mod_name(lua_State *L)
 			}
 		}
 	}
-	warningstream << "Mod security:: _get_real_caller_mod_name: "<< result << std::endl;
 	return result;
 }
 
