@@ -513,6 +513,31 @@ std::string inline _get_mod_name_from_debug(lua_Debug *info)
 		return mod_name;
 	}
 
+#ifdef __ANDROID__
+	std::string BUILTIN_DIR = Server::getBuiltinLuaPath();
+	std::string MOD_DIR = porting::path_user + DIR_DELIM + "mods" + DIR_DELIM;
+	std::string GAME_DIR = porting::path_user + DIR_DELIM + "games" + DIR_DELIM;
+
+	size_t found = src.find(GAME_DIR);
+	if (found != std::string::npos) {
+		std::string t = src.substr(found + GAME_DIR.length());
+		found = t.find(DIR_DELIM_CHAR);
+		if (found != std::string::npos) {
+			t = t.substr(found + 6); // length of "mods/"
+			found = t.find(DIR_DELIM_CHAR);
+			if (found != std::string::npos) mod_name = t.substr(0, found);
+		}
+	}
+
+	if (mod_name.empty()) {
+		found = src.find(MOD_DIR);
+		if (found != std::string::npos) {
+			mod_name = src.substr(found+MOD_DIR.length());
+			found = mod_name.find(DIR_DELIM_CHAR);
+			if (found != std::string::npos) mod_name = mod_name.substr(0, found);
+		}
+	}
+#else
 	std::string BIN_DIR = std::string(DIR_DELIM) + "bin" + DIR_DELIM;
 	std::string MOD_DIR = BIN_DIR + ".." + DIR_DELIM + "mods" + DIR_DELIM;
 	std::string BUILTIN_DIR = BIN_DIR + ".." + DIR_DELIM + "builtin" + DIR_DELIM;
@@ -558,6 +583,8 @@ std::string inline _get_mod_name_from_debug(lua_Debug *info)
 			}
 		}
 	}
+#endif
+
 	return mod_name;
 }
 
