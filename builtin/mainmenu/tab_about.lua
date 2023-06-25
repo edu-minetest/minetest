@@ -145,9 +145,11 @@ return {
 		local credit_list = {}
 		table.insert_all(credit_list, {
 			core.colorize("#ff0", "Minetest Edu" .. verHash  .. fgettext("Core Developers")),
-			"",
 		})
 		prepare_credits(credit_list, edu_core_developers)
+		table.insert_all(credit_list, {
+			"",
+		})
 		table.insert_all(credit_list, {
 			core.colorize("#000", "Dedication of the current release"),
 			"The 5.7.0 release is dedicated to the memory of",
