@@ -644,8 +644,12 @@ msgid ""
 msgstr "用户名无效：名称只允许字母数字下划线和减号: a-z, A-Z, 0-9, -, _"
 
 #: builtin/mainmenu/dlg_play_game.lua
+msgid "Nickname"
+msgstr "昵称(需要nickname模组)"
+
+#: builtin/mainmenu/dlg_play_game.lua
 msgid "Student name should not be same as the teacher"
-msgstr ""
+msgstr "学生名称不能与老师的名称一样"
 
 #: builtin/mainmenu/dlg_play_game.lua builtin/mainmenu/tab_teacher.lua
 msgid "Teacher"
@@ -5154,10 +5158,6 @@ msgid ""
 msgstr ""
 "掉落摇动倍数。\n"
 "例如：设为0则不摇动；1.0则正常；2.0则两倍。"
-
-#: src/settings_translation_file.cpp
-msgid "Mute sound"
-msgstr "静音"
 
 #: src/settings_translation_file.cpp
 msgid ""

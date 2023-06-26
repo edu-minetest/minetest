@@ -31,6 +31,30 @@ local default_worlds = {
 
 local enable_default_mods = dofile(menupath .. DIR_DELIM .. "enable_default_mods.lua")
 
+local function setNickname(playerName, nickname)
+  local filePath = core.get_mod_data_path('nickname') .. DIR_DELIM .. playerName .. '.conf'
+  local vSettings = Settings(filePath)
+  local vOldNickname = vSettings:get('text')
+  local vNewNickname = nickname .. "(" .. playerName .. ")"
+  if vOldNickname ~= vNewNickname then
+    vSettings:set('text', vNewNickname)
+    vSettings:write()
+  end
+end
+
+local function getNickname(playerName)
+  local filePath = core.get_mod_data_path('nickname') .. DIR_DELIM .. playerName .. '.conf'
+  local vSettings = Settings(filePath)
+  local result = vSettings:get('text')
+  if result ~= nil and #result then
+    local i = string.find(result, '%(')
+    if i ~= nil then
+      result = string.sub(result, 1, i - 1)
+    end
+  end
+  return result or ''
+end
+
 local function get_formspec(data)
   local allowLocalPlay = getTeacherConf("teacher_allow_local_play", true, 'bool')
   local allowRemotePlay = getTeacherConf("teacher_allow_remote_play", false, 'bool')
@@ -39,6 +63,7 @@ local function get_formspec(data)
   local retval = ""
   local y = 0.5
   local muteSound = core.settings:get_bool("mute_sound", false)
+  local playerName = core.settings:get("student_name") or "student"
 
   retval = retval ..
     "formspec_version[3]" ..
@@ -67,13 +92,19 @@ local function get_formspec(data)
       "tooltip[btnPlayLocal;".. fgettext("Play Local Game") .. "]"
   end
   retval = retval ..
-  " field[10.2,0.8;3,0.8;name;".. fgettext("Name") ..";".. esc(core.settings:get("student_name") or "student") ..
+  " field[10.2,0.8;3,0.8;name;".. fgettext("Name") ..";".. esc(playerName) ..
   "]" ..
   "button[13.28,0.8;2.48,0.8;btnPasswd;".. fgettext("Password") .. "]" ..
   "tooltip[btnPasswd;"..fgettext("Change Password").."]"
 
   retval = retval ..
-  "checkbox[10.2,2;mute;"..fgettext("Mute sound")..";" ..dump(muteSound).. "]"
+  " field[10.2,2.2;4,0.8;nickname;".. fgettext("Nickname") ..";".. esc(getNickname(playerName)) ..
+  "]" ..
+  "image_button[14.28,2.2;0.8,0.8;".. escDefaultTexturedir .."refresh.png;btnRefresh;]" ..
+  "tooltip[btnRefresh;"..fgettext("Refresh").."]"
+
+  retval = retval ..
+  "checkbox[10.2,3.2;mute;"..fgettext("Mute sound")..";" ..dump(muteSound).. "]"
 
   return retval
 end
@@ -94,6 +125,7 @@ local function dialog_button_handler(this, fields, confirmPass)
   local name = fields["name"]
   local oldName = core.settings:get("student_name")
   local teacherName = core.settings:get("teacher_name")
+  local nickname = fields["nickname"]
 
   local v = fields["mute"]
   if v ~= nil then
@@ -118,6 +150,7 @@ local function dialog_button_handler(this, fields, confirmPass)
         return true
       end
       core.settings:set("student_name", name)
+      oldName = name
     else
       messagebox("teacher", msg, this)
       return true
@@ -125,6 +158,11 @@ local function dialog_button_handler(this, fields, confirmPass)
   else
     name = oldName or "student"
   end
+
+  if (nickname and nickname ~= "") then
+    setNickname(oldName, nickname)
+  end
+
 
   if confirmPass then
     return verifyTeacherPassword(this, password)
@@ -176,6 +214,8 @@ local function dialog_button_handler(this, fields, confirmPass)
     dlgPassword:set_parent(this)
     this:hide()
     dlgPassword:show()
+    return true
+  elseif fields["btnRefresh"] ~= nil then
     return true
   end
   return false
