@@ -1061,6 +1061,28 @@ int ModApiMainMenu::l_get_once(lua_State *L)
 	return 1;
 }
 
+static std::string m_path_mod_data;
+
+// get_mod_data_path()
+int ModApiMainMenu::l_get_mod_data_path(lua_State *L)
+{
+	NO_MAP_LOCK_REQUIRED;
+
+	std::string modname = luaL_optstring(L, 1, "");
+
+	if (!modname.empty()) {
+		std::string path = m_path_mod_data + DIR_DELIM + modname;
+		if (!fs::CreateAllDirs(path)) {
+			throw LuaError("Failed to create dir");
+		}
+
+		lua_pushstring(L, path.c_str());
+	} else {
+		lua_pushstring(L, m_path_mod_data.c_str());
+	}
+	return 1;
+}
+
 /******************************************************************************/
 void ModApiMainMenu::Initialize(lua_State *L, int top)
 {
@@ -1111,6 +1133,11 @@ void ModApiMainMenu::Initialize(lua_State *L, int top)
 	API_FCT(do_async_callback);
 	API_FCT(set_once);
 	API_FCT(get_once);
+	API_FCT(get_mod_data_path);
+
+	m_path_mod_data = porting::path_user + DIR_DELIM "mod_data";
+	if (!fs::CreateDir(m_path_mod_data))
+		throw LuaError("Failed to create common dir");
 }
 
 /******************************************************************************/

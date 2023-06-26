@@ -164,6 +164,7 @@ private:
 
 	// async
 	static int l_do_async_callback(lua_State *L);
+	static int l_get_mod_data_path(lua_State *L);
 
 public:
 
