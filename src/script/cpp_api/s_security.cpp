@@ -508,7 +508,9 @@ std::string inline _get_mod_name_from_debug(lua_Debug *info)
 	std::string mod_name;
 	std::string src = info->source;
 
-	if (src == "=[C]") {
+	if (src.empty()) return mod_name;
+	// if (src == "=[C]" || src == "=(load)") {
+	if (src[0] != '@') {
 		mod_name = BUILTIN_MOD_NAME;
 		return mod_name;
 	}
@@ -546,6 +548,10 @@ std::string inline _get_mod_name_from_debug(lua_Debug *info)
 
 	// Find the first "/bin/" string posistion.
 	size_t bin_pos = src.find(BIN_DIR);
+	if (bin_pos == 	std::string::npos) {
+		errorstream << "Mod security:: Can not find 'bin/' in the script filename: " << src << std::endl;
+		return mod_name;
+	}
 	// Find the first "/bin/../builtin/" string posistion.
 	size_t found = src.find(BUILTIN_DIR);
 	if (found != std::string::npos) {
