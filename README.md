@@ -92,6 +92,11 @@ Branch Description:
 * `edu/static_spawnpoint`: fix spawn point issue
 * `edu/android/client-translation`: fix android default Chinese problem
 * `feat/singleplayer-user`: Added multi-users support for single-player game
+* `fix/trusted_mod_io`: This security patch determines a function's access rights by checking which mod ultimately initiated the execution of the script function.
+  * Note: you should disable LUA's tail call optimization for the lua call stack info bug.
+  * When a regular mod calls a function of a trusted mod, the privilege should not be elevated.
+  * When a trusted mod calls a function of a regular mod, the privilege should not downgrade.
+
 
 ### LICENSE
 
