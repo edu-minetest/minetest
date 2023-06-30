@@ -48,6 +48,7 @@ struct ModSpec
 	std::unordered_set<std::string> depends;
 	std::unordered_set<std::string> optdepends;
 	std::unordered_set<std::string> unsatisfied_depends;
+	std::unordered_set<std::string> trusted_mods;
 
 	bool part_of_modpack = false;
 	bool is_modpack = false;

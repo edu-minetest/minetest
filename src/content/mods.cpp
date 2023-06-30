@@ -77,6 +77,7 @@ bool parseModContents(ModSpec &spec)
 	spec.optdepends.clear();
 	spec.is_modpack = false;
 	spec.modpack_content.clear();
+	spec.trusted_mods.clear();
 
 	// Handle modpacks (defined by containing modpack.txt)
 	if (fs::IsFile(spec.path + DIR_DELIM + "modpack.txt") ||
@@ -126,6 +127,18 @@ bool parseModContents(ModSpec &spec)
 		// clang-format on
 		for (const auto &dependency : str_split(dep, ',')) {
 			spec.optdepends.insert(dependency);
+		}
+	}
+
+	if (info.exists("trusted_mods")) {
+		mod_conf_has_depends = true;
+		std::string dep = info.get("trusted_mods");
+		// clang-format off
+		dep.erase(std::remove_if(dep.begin(), dep.end(),
+				static_cast<int (*)(int)>(&std::isspace)), dep.end());
+		// clang-format on
+		for (const auto &dependency : str_split(dep, ',')) {
+			spec.trusted_mods.insert(dependency);
 		}
 	}
 
