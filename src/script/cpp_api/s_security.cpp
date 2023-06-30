@@ -507,20 +507,90 @@ std::string inline _get_mod_name_from_debug(lua_Debug *info)
 {
 	std::string mod_name;
 	std::string src = info->source;
-	std::string BIN_DIR = std::string(DIR_DELIM) + "bin" + DIR_DELIM;
-	std::string MOD_DIR = BIN_DIR + ".." + DIR_DELIM + "mods" + DIR_DELIM;
 
-	size_t found = src.find(MOD_DIR);
+	if (src.empty()) return mod_name;
+	// if (src == "=[C]" || src == "=(load)") {
+	if (src[0] != '@') {
+		mod_name = BUILTIN_MOD_NAME;
+		return mod_name;
+	}
+
+#ifdef __ANDROID__
+	std::string BUILTIN_DIR = Server::getBuiltinLuaPath();
+	std::string MOD_DIR = porting::path_user + DIR_DELIM + "mods" + DIR_DELIM;
+	std::string GAME_DIR = porting::path_user + DIR_DELIM + "games" + DIR_DELIM;
+
+	size_t found = src.find(GAME_DIR);
 	if (found != std::string::npos) {
-		// Check the path whether be faked.
-		if (src.find(BIN_DIR) == found) {
+		std::string t = src.substr(found + GAME_DIR.length());
+		found = t.find(DIR_DELIM_CHAR);
+		if (found != std::string::npos) {
+			t = t.substr(found + 6); // length of "mods/"
+			found = t.find(DIR_DELIM_CHAR);
+			if (found != std::string::npos) mod_name = t.substr(0, found);
+		}
+	}
+
+	if (mod_name.empty()) {
+		found = src.find(MOD_DIR);
+		if (found != std::string::npos) {
 			mod_name = src.substr(found+MOD_DIR.length());
 			found = mod_name.find(DIR_DELIM_CHAR);
 			if (found != std::string::npos) mod_name = mod_name.substr(0, found);
-		} else {
-			warningstream << "Mod security:: fake "<< MOD_DIR << " folder found in mod " << src.substr(found+MOD_DIR.length()) << std::endl;
 		}
 	}
+#else
+	std::string BIN_DIR = std::string(DIR_DELIM) + "bin" + DIR_DELIM;
+	std::string MOD_DIR = BIN_DIR + ".." + DIR_DELIM + "mods" + DIR_DELIM;
+	std::string BUILTIN_DIR = BIN_DIR + ".." + DIR_DELIM + "builtin" + DIR_DELIM;
+	std::string GAME_DIR = BIN_DIR + ".." + DIR_DELIM + "games" + DIR_DELIM;
+
+
+	// Find the first "/bin/" string posistion.
+	size_t bin_pos = src.find(BIN_DIR);
+	if (bin_pos == 	std::string::npos) {
+		errorstream << "Mod security:: Can not find 'bin/' in the script filename: " << src << std::endl;
+		return mod_name;
+	}
+	// Find the first "/bin/../builtin/" string posistion.
+	size_t found = src.find(BUILTIN_DIR);
+	if (found != std::string::npos) {
+		// Check the path whether be faked.
+		// the found position should be different from bin_pos if it's faked
+		// eg, "/bin/../mods/faked_mod/bin/../builtin/"
+		if (bin_pos == found) {
+			mod_name = BUILTIN_MOD_NAME;
+		}
+	}
+
+	if (mod_name.empty()) {
+		found = src.find(GAME_DIR);
+		if (bin_pos == found) {
+			std::string t = src.substr(found + GAME_DIR.length());
+			found = t.find(DIR_DELIM_CHAR);
+			if (found != std::string::npos) {
+				t = t.substr(found + 6); // length of "mods/"
+				found = t.find(DIR_DELIM_CHAR);
+				if (found != std::string::npos) mod_name = t.substr(0, found);
+			}
+		}
+	}
+
+	if (mod_name.empty()) {
+		found = src.find(MOD_DIR);
+		if (found != std::string::npos) {
+			// Check the path whether be faked.
+			if (bin_pos == found) {
+				mod_name = src.substr(found+MOD_DIR.length());
+				found = mod_name.find(DIR_DELIM_CHAR);
+				if (found != std::string::npos) mod_name = mod_name.substr(0, found);
+			} else {
+				warningstream << "Mod security:: fake "<< MOD_DIR << " folder found in mod " << src.substr(found+MOD_DIR.length()) << std::endl;
+			}
+		}
+	}
+#endif
+
 	return mod_name;
 }
 
@@ -557,57 +627,76 @@ std::string inline _get_real_caller_mod_name(lua_State *L)
 	if (gamedef) {
 		std::vector<std::string> caller_mods = _get_caller_mod_names(L);
 		if (caller_mods.empty()) return result;
-		std::string executor_mod_name = caller_mods.at(0);
+
+		std::size_t iMin = 0;
+		std::string executor_mod_name;
+		while (iMin < caller_mods.size()) {
+			executor_mod_name = caller_mods.at(iMin);
+			if (executor_mod_name != BUILTIN_MOD_NAME) break;
+			iMin++;
+		}
+		if (iMin >= caller_mods.size()) return executor_mod_name;
 		const ModSpec *executor_mod = gamedef->getModSpec(executor_mod_name);
 		if (executor_mod) {
 			bool ok = false;
 			std::string prev_mod_name;
 			std::size_t i = caller_mods.size() - 1;
-			if (i == 0) return executor_mod_name;
+			if (i == iMin) return executor_mod_name;
 
 			// get the first event trigger
-			while (i>0) {
+			// Sometimes, the initiator of the action is not a builtin module, but an event trigger from a third-party module. For example, triggered by `formspecs`.
+			// And it should be in the prev_mod's dependencies or optional dependencies.
+			while (i>iMin) {
 				result = caller_mods.at(i);
 				prev_mod_name = caller_mods.at(i-1);
-				i--;
-
-				const ModSpec *prev_mod = gamedef->getModSpec(prev_mod_name);
-				if (!CONTAINS(prev_mod->depends, result) && !CONTAINS(prev_mod->optdepends, result)) {
+				if (prev_mod_name == BUILTIN_MOD_NAME) {
 					break;
 				}
+				if (result != BUILTIN_MOD_NAME) {
+					const ModSpec *prev_mod = gamedef->getModSpec(prev_mod_name);
+					if (prev_mod && !CONTAINS(prev_mod->depends, result) && !CONTAINS(prev_mod->optdepends, result)) {
+						break;
+					}
+				}
+				i--;
 				if (prev_mod_name == executor_mod_name) {
 					ok = true;
 					// this means the second is the trigger, the first is caller for no more callers
-					if (i == 0) result = executor_mod_name;
+					if (i == iMin) result = executor_mod_name;
 					break;
 				}
 			}
 			const ModSpec *mod;
 			// get real caller
-			while (i>0) {
+			while (i>iMin) {
 				result = caller_mods.at(i);
-				mod = gamedef->getModSpec(result);
-				prev_mod_name = caller_mods.at(i-1);
-				// check the whole depends chain
-				if (mod && (CONTAINS(mod->depends, prev_mod_name) || CONTAINS(mod->optdepends, prev_mod_name))) {
-					ok = true;
-				} else {
-					executor_mod_name = prev_mod_name;
-					ok = false;
+				if (result != BUILTIN_MOD_NAME) {
+					mod = gamedef->getModSpec(result);
+					prev_mod_name = caller_mods.at(i-1);
+					// check the whole depends chain
+					if (mod && (CONTAINS(mod->depends, prev_mod_name) || CONTAINS(mod->optdepends, prev_mod_name))) {
+						ok = true;
+					} else {
+						executor_mod_name = prev_mod_name;
+						ok = false;
+						break;
+					}
 				}
 				i--;
 			}
 			if (!ok) {
-				if (_is_in_whitelist("secure.trusted_mods", executor_mod_name)) {
-					warningstream << "Mod security:: The mod "<< result << " is hooked by trusted mod:" << executor_mod_name << std::endl;
-				} else {
-					errorstream << "Mod security:: FAKE(MAYBE) the mod "<< result << " is hooked by " << executor_mod_name << ". Add it in secure.trusted_mods to allow hooking IO operation." << std::endl;
-					result.clear();
+				if (executor_mod_name != BUILTIN_MOD_NAME) {
+					if (_is_in_whitelist("secure.trusted_mods", executor_mod_name)) {
+						warningstream << "Mod security:: The function used by mod "<< result << " is hooked by trusted mod:" << executor_mod_name << std::endl;
+					} else {
+						errorstream << "Mod security:: FAKE(MAYBE) the function used by mod "<< result << " is hooked by " << executor_mod_name << ". Add it in secure.trusted_mods to allow hooking IO operation." << std::endl;
+						result.clear();
+					}
 				}
 			}
 		}
 	}
-	// warningstream << "Mod security:: _get_real_caller_mod_name "<< result << std::endl;
+	// warningstream << "Mod security:: _get_real_caller_mod_name: "<< result << std::endl;
 	return result;
 }
 
@@ -723,13 +812,32 @@ bool ScriptApiSecurity::checkPath(lua_State *L, const char *path,
 					return true;
 				}
 			}
-		}
 
-		// Allow write access to own mod data dir
-		str = fs::AbsolutePath(gamedef->getModDataPath() + DIR_DELIM + mod_name);
-		if (!str.empty() && fs::PathStartsWith(abs_path, str)) {
-			if (write_allowed) *write_allowed = true;
-			return true;
+			// Allow write access to own mod data dir
+			str = fs::AbsolutePath(gamedef->getModDataPath() + DIR_DELIM + mod_name);
+			if (!str.empty() && fs::PathStartsWith(abs_path, str)) {
+				if (write_allowed) *write_allowed = true;
+				return true;
+			}
+
+			// Whether allow another mod(mod_name) to write the own_mod data dir
+			str = fs::AbsolutePath(gamedef->getModDataPath());
+			if (fs::PathStartsWith(abs_path, str)) {
+				std::size_t len = str.length();
+				if (str[len-1] != DIR_DELIM_CHAR) len++;
+				std::string::size_type pos = abs_path.find(DIR_DELIM_CHAR, len);
+				std::string own_mod_name;
+				if (pos != std::string::npos) {
+					own_mod_name = abs_path.substr(len, pos - len);
+				} else {
+					own_mod_name = abs_path.substr(len);
+				}
+				const ModSpec *own_mod = gamedef->getModSpec(own_mod_name);
+				if (own_mod && CONTAINS(own_mod->trusted_mods, mod_name)) {
+					if (write_allowed) *write_allowed = true;
+					return true;
+				}
+			}
 		}
 	}
 
