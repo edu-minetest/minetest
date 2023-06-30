@@ -131,7 +131,6 @@ bool parseModContents(ModSpec &spec)
 	}
 
 	if (info.exists("trusted_mods")) {
-		mod_conf_has_depends = true;
 		std::string dep = info.get("trusted_mods");
 		// clang-format off
 		dep.erase(std::remove_if(dep.begin(), dep.end(),
