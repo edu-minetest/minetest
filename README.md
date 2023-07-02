@@ -93,10 +93,15 @@ Branch Description:
 * `edu/android/client-translation`: fix android default Chinese problem
 * `feat/singleplayer-user`: Added multi-users support for single-player game
 * `fix/trusted_mod_io`: This security patch determines a function's access rights by checking which mod ultimately initiated the execution of the script function.
-  * Note: you should disable LUA's tail call optimization for the lua call stack info bug.
+  * Note: You should disable Lua's tail call optimization to address the issue of Lua call stack information being lost.
+  * Here is my code to [disable Lua's tail call optimization](https://github.com/edu-minetest/LuaJIT/tree/feat/tailcall)
   * When a regular mod calls a function of a trusted mod, the privilege should not be elevated.
   * When a trusted mod calls a function of a regular mod, the privilege should not downgrade.
-
+* `rubenwardy-world_independent_common_data`: Modified from [Add world-independent storage directory for mods](https://github.com/minetest/minetest/pull/12315)
+  * `minetest.get_mod_data_path()`: add optional `mod_name` argument.
+  * `minetest.get_mod_data_path(mod_name)` can be used in `mainmenu`
+  * The `mod_data/[mod_name]/` directory is typically writable by its mod owner and readable by others.
+  * already merged the `fix/trusted_mod_io` branch.
 
 ### LICENSE
 
