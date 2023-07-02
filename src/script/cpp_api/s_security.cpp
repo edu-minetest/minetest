@@ -507,6 +507,7 @@ std::string inline _get_mod_name_from_debug(lua_Debug *info)
 {
 	std::string mod_name;
 	std::string src = info->source;
+	// warningstream << "Mod security:: _get_mod_name_from_debug "<< src << std::endl;
 
 	if (src.empty()) return mod_name;
 	// if (src == "=[C]" || src == "=(load)") {
@@ -595,21 +596,22 @@ std::string inline _get_mod_name_from_debug(lua_Debug *info)
 }
 
 std::vector<std::string> inline _get_caller_mod_names(lua_State *L) {
-  lua_Debug info;
-  std::vector<std::string> result;
-  int level = 1;
+	lua_Debug info;
+	std::vector<std::string> result;
+	int level = 1;
 	std::string mod_name;
-  while (lua_getstack(L, level, &info)) {
-    FATAL_ERROR_IF(!lua_getinfo(L, "S", &info), "lua_getinfo() failed");
-    mod_name = _get_mod_name_from_debug(&info);
-    if (mod_name.empty()) break;
-    if (result.size() == 0 || result.back() != mod_name) {
-      result.push_back(mod_name);
-    }
+	while (lua_getstack(L, level, &info)) {
+		FATAL_ERROR_IF(!lua_getinfo(L, "S", &info), "lua_getinfo() failed");
+		mod_name = _get_mod_name_from_debug(&info);
+		if (mod_name.empty()) break;
+		if ((result.size() == 0) || (result.back() != mod_name)) {
+			result.push_back(mod_name);
+		}
 		level++;
-  }
-  return result;
+	}
+	return result;
 }
+
 bool inline _is_in_whitelist(const std::string &setting, const std::string &mod_name)
 {
 	std::string value = g_settings->get(setting);
@@ -669,10 +671,11 @@ std::string inline _get_real_caller_mod_name(lua_State *L)
 			const ModSpec *mod;
 			// get real caller
 			while (i>iMin) {
-				result = caller_mods.at(i);
-				if (result != BUILTIN_MOD_NAME) {
-					mod = gamedef->getModSpec(result);
+				const std::string mod_name = caller_mods.at(i);
+				if (mod_name != BUILTIN_MOD_NAME) {
+					mod = gamedef->getModSpec(mod_name);
 					prev_mod_name = caller_mods.at(i-1);
+					if (prev_mod_name == BUILTIN_MOD_NAME) break;
 					// check the whole depends chain
 					if (mod && (CONTAINS(mod->depends, prev_mod_name) || CONTAINS(mod->optdepends, prev_mod_name))) {
 						ok = true;
