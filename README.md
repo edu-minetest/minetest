@@ -42,7 +42,7 @@ Parents/teachers need to manage the content of the game, as well as control the 
 | Self-Hosted service | Not supported | Can be self-hosted local network or Internet game service on linux server |
 | Game Time Control | Not Supported | Support Game Time Control |
 | Game Content Management | Not Supported | Support Game Content Management |
-| Interspersed practice | Not supported | Support interspersed practice during play |
+| Interspersed practice | Not supported | Support periodic practices during gameplay |
 
 ---
 
@@ -57,7 +57,7 @@ Parents/teachers need to manage the content of the game, as well as control the 
   - ✘ No support self-hosted local network or Internet services (services can only be provided in the game)
   - ✘ No support controlling game time
   - ✘ No support game content management
-  - ✘ Interspersed practice in game is not supported
+  - ✘ periodic practices in game is not supported
 - Minetest:Education Edit：
   - The essence is a software that can run offline (no registration required, no network is also available)
   - Free (free) open source software
@@ -69,7 +69,7 @@ Parents/teachers need to manage the content of the game, as well as control the 
   - ✔ Support local network or Internet game service on Linux server for multiplayer games (minetestserver)
   - ✔ Support control game time
   - ✔ Support game content management
-  - ✔ Support interspersed practice in-game
+  - ✔ Support periodic practices in-game
 
 ### Download
 
