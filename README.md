@@ -24,11 +24,25 @@ Allowing children to play in the game world does not serve any educational purpo
 
 Parents/teachers need to manage the content of the game, as well as control the time of the game, and be able to test while playing. It's best to be able to write course assignments for the interactive educational world in the simplest possible way.
 
-- [X] Separate play UI from play world management UI
-- [X] Control play time and protect children's eyes
-- [X] Insert practice while gaming
+- [X] Separates game interface into gameplay and password-protected content management screens for parents/teachers.
+- [X] Control of gameplay time to protect children's eyesight
+- [X] Periodically presents educational exercises to improve knowledge while playing
 - [X] Single-player game support different users to use a shared computer
-- [ ] Text writing interactive education world lesson plan (TODO: `Text To Game`)
+- [ ] Write interactive educational world courses using approximate natural language text outside of the game(TODO: `Text To Game`)
+
+To enhance the learning experience, we developed the [Quiz player challenge mod](https://github.com/edu-minetest/quiz/) to implement periodic exercises during gameplay, ensuring that children are consistently practicing and learning.
+
+To make it easier for parents and teachers to manage game content, we directly modified the interface of Minetest by separating the student game interface (gameplay) from the teacher interface (manage game content). This makes it easier for teachers to manage the game and customize it for their students.
+
+In addition, Minetest: Education Edition comes with a variety of built-in educational mods, including mods for mathematics, automation, electronic circuits, programming, and more. These mods provide a wealth of educational content that can be used to enhance learning in various subjects.
+
+Looking to the future, we plan to develop a specification for a near-natural language text format, which will be used to write interactive course content. The course content written in this format can be converted into Minetest game worlds using a tool that we'll develop. This means that teachers will only need to maintain the course content text, rather than the game world itself.
+
+This approach will make it easier for teachers and parents to collaborate on course content, as they can review and revise the text-based course content without having to deal with the complexities of building and maintaining a game world.
+
+The game world is engaging and encourages children to keep practicing if they want to continue playing. With [Minetest: Education Edition](./), children can explore and learn in a fun and interactive way, with the freedom to customize their learning experience to fit their interests and needs.
+
+We hope that by releasing this open-source project, more people can benefit from the learning opportunities presented by [Minetest: Education Edition](./).
 
 ### Comparison with "[Minecraft: Education Edition](https://education.minecraft.net/)" 🎯
 
