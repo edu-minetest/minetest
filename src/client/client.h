@@ -353,6 +353,7 @@ public:
 	{ return m_proto_ver; }
 
 	bool m_simple_singleplayer_mode;
+	bool m_is_single_player;
 
 	float mediaReceiveProgress();
 

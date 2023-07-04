@@ -331,6 +331,8 @@ int ModApiClient::l_get_server_info(lua_State *L)
 	lua_setfield(L, -2, "port");
 	lua_pushinteger(L, client->getProtoVersion());
 	lua_setfield(L, -2, "protocol_version");
+	lua_pushboolean(L, client->m_is_single_player);
+	lua_setfield(L, -2, "is_singleplayer");
 	return 1;
 }
 

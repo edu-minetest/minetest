@@ -1627,6 +1627,7 @@ bool Game::connectToServer(const GameStartData &start_data,
 	}
 
 	client->m_simple_singleplayer_mode = simple_singleplayer_mode;
+	client->m_is_single_player = start_data.isSinglePlayer();
 
 	infostream << "Connecting to server at ";
 	connect_address.print(infostream);
