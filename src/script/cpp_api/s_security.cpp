@@ -549,48 +549,60 @@ std::string inline _get_mod_name_from_debug(lua_Debug *info)
 
 	// Find the first "/bin/" string posistion.
 	size_t bin_pos = src.find(BIN_DIR);
-	if (bin_pos == 	std::string::npos) {
-		errorstream << "Mod security:: Can not find 'bin/' in the script filename: " << src << std::endl;
-		return mod_name;
-	}
-	// Find the first "/bin/../builtin/" string posistion.
-	size_t found = src.find(BUILTIN_DIR);
-	if (found != std::string::npos) {
-		// Check the path whether be faked.
-		// the found position should be different from bin_pos if it's faked
-		// eg, "/bin/../mods/faked_mod/bin/../builtin/"
-		if (bin_pos == found) {
-			mod_name = BUILTIN_MOD_NAME;
-		}
-	}
-
-	if (mod_name.empty()) {
-		found = src.find(GAME_DIR);
-		if (bin_pos == found) {
-			std::string t = src.substr(found + GAME_DIR.length());
-			found = t.find(DIR_DELIM_CHAR);
-			if (found != std::string::npos) {
-				t = t.substr(found + 6); // length of "mods/"
-				found = t.find(DIR_DELIM_CHAR);
-				if (found != std::string::npos) mod_name = t.substr(0, found);
-			}
-		}
-	}
-
-	if (mod_name.empty()) {
-		found = src.find(MOD_DIR);
+	if (bin_pos != std::string::npos) {
+		// Find the first "/bin/../builtin/" string posistion.
+		size_t found = src.find(BUILTIN_DIR);
 		if (found != std::string::npos) {
 			// Check the path whether be faked.
+			// the found position should be different from bin_pos if it's faked
+			// eg, "/bin/../mods/faked_mod/bin/../builtin/"
 			if (bin_pos == found) {
-				mod_name = src.substr(found+MOD_DIR.length());
-				found = mod_name.find(DIR_DELIM_CHAR);
-				if (found != std::string::npos) mod_name = mod_name.substr(0, found);
-			} else {
-				warningstream << "Mod security:: fake "<< MOD_DIR << " folder found in mod " << src.substr(found+MOD_DIR.length()) << std::endl;
+				mod_name = BUILTIN_MOD_NAME;
+			}
+		}
+
+		if (mod_name.empty()) {
+			found = src.find(GAME_DIR);
+			if (bin_pos == found) {
+				std::string t = src.substr(found + GAME_DIR.length());
+				found = t.find(DIR_DELIM_CHAR);
+				if (found != std::string::npos) {
+					t = t.substr(found + 6); // length of "mods/"
+					found = t.find(DIR_DELIM_CHAR);
+					if (found != std::string::npos) mod_name = t.substr(0, found);
+				}
+			}
+		}
+
+		if (mod_name.empty()) {
+			found = src.find(MOD_DIR);
+			if (found != std::string::npos) {
+				// Check the path whether be faked.
+				if (bin_pos == found) {
+					mod_name = src.substr(found+MOD_DIR.length());
+					found = mod_name.find(DIR_DELIM_CHAR);
+					if (found != std::string::npos) mod_name = mod_name.substr(0, found);
+				} else {
+					warningstream << "Mod security:: fake "<< MOD_DIR << " folder found in mod " << src.substr(found+MOD_DIR.length()) << std::endl;
+				}
 			}
 		}
 	}
 #endif
+	if (mod_name.empty()) {
+		// Is it a clientmod?
+		size_t found = src.find(":");
+		if (found != std::string::npos) {
+			std::string t = src.substr(1, found-1);
+			found = t.find(DIR_DELIM);
+			if (found == std::string::npos) {
+				mod_name = t;
+			}
+		}
+	}
+	if (mod_name.empty()) {
+		warningstream << "Mod security:: Can not find mod name in the script filename: " << src << std::endl;
+	}
 
 	return mod_name;
 }
