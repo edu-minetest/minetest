@@ -385,6 +385,7 @@ public:
 	virtual scene::IAnimatedMesh* getMesh(const std::string &filename, bool cache = false);
 	const std::string* getModFile(std::string filename);
 	ModStorageDatabase *getModStorageDatabase() override { return m_mod_storage_database; }
+	virtual std::string getModDataPath() const { return m_path_mod_data; }
 
 	// Migrates away old files-based mod storage if necessary
 	void migrateModStorage();
@@ -611,4 +612,5 @@ private:
 
 	// The number of blocks the client will combine for mesh generation.
 	MeshGrid m_mesh_grid;
+	std::string m_path_mod_data;
 };

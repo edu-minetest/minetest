@@ -35,6 +35,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "map.h"
 #include "util/string.h"
 #include "nodedef.h"
+#include "filesys.h"
 
 #define checkCSMRestrictionFlag(flag) \
 	( getClient(L)->checkCSMRestrictionFlag(CSMRestrictionFlags::flag) )
@@ -416,6 +417,28 @@ int ModApiClient::l_get_csm_restrictions(lua_State *L)
 	return 1;
 }
 
+// get_mod_data_path()
+int ModApiClient::l_get_mod_data_path(lua_State *L)
+{
+	NO_MAP_LOCK_REQUIRED;
+
+	std::string modname = luaL_optstring(L, 1, "");
+	std::string path_mod_data = getClient(L)->getModDataPath();
+
+
+	if (!modname.empty()) {
+		std::string path = path_mod_data + DIR_DELIM + modname;
+		if (!fs::CreateAllDirs(path)) {
+			throw LuaError("Failed to create dir");
+		}
+
+		lua_pushstring(L, path.c_str());
+	} else {
+		lua_pushstring(L, path_mod_data.c_str());
+	}
+	return 1;
+}
+
 void ModApiClient::Initialize(lua_State *L, int top)
 {
 	API_FCT(get_current_modname);
@@ -443,4 +466,5 @@ void ModApiClient::Initialize(lua_State *L, int top)
 	API_FCT(get_builtin_path);
 	API_FCT(get_language);
 	API_FCT(get_csm_restrictions);
+	API_FCT(get_mod_data_path);
 }

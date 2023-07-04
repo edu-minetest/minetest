@@ -33,6 +33,8 @@ private:
 	// get_modpath(modname)
 	static int l_get_modpath(lua_State *L);
 
+	static int l_get_mod_data_path(lua_State *L);
+
 	// print(text)
 	static int l_print(lua_State *L);
 
