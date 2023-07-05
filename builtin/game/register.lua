@@ -441,29 +441,31 @@ function core.run_callbacks(callbacks, mode, ...)
 	end
 	local ret = nil
 	for i = 1, cb_len do
-		local origin = core.callback_origins[callbacks[i]]
-		core.set_last_run_mod(origin.mod)
-		local cb_ret = callbacks[i](...)
+		if type(callbacks[i]) == 'function' then
+			local origin = core.callback_origins[callbacks[i]]
+			core.set_last_run_mod(origin.mod)
+			local cb_ret = callbacks[i](...)
 
-		if mode == 0 and i == 1 then
-			ret = cb_ret
-		elseif mode == 1 and i == cb_len then
-			ret = cb_ret
-		elseif mode == 2 then
-			if not cb_ret or i == 1 then
+			if mode == 0 and i == 1 then
 				ret = cb_ret
-			end
-		elseif mode == 3 then
-			if cb_ret then
+			elseif mode == 1 and i == cb_len then
+				ret = cb_ret
+			elseif mode == 2 then
+				if not cb_ret or i == 1 then
+					ret = cb_ret
+				end
+			elseif mode == 3 then
+				if cb_ret then
+					return cb_ret
+				end
+				ret = cb_ret
+			elseif mode == 4 then
+				if (cb_ret and not ret) or i == 1 then
+					ret = cb_ret
+				end
+			elseif mode == 5 and cb_ret then
 				return cb_ret
 			end
-			ret = cb_ret
-		elseif mode == 4 then
-			if (cb_ret and not ret) or i == 1 then
-				ret = cb_ret
-			end
-		elseif mode == 5 and cb_ret then
-			return cb_ret
 		end
 	end
 	return ret
@@ -481,6 +483,12 @@ function core.run_priv_callbacks(name, priv, caller, method)
 	end
 end
 
+local function get_nil_index(list)
+	for i = 1, #list do
+		if list[i] == nil then return i end
+	end
+end
+
 --
 -- Callback registration
 --
@@ -488,13 +496,17 @@ end
 local function make_registration()
 	local t = {}
 	local registerfunc = function(func)
-		t[#t + 1] = func
+		local i = get_nil_index(t) or #t + 1
+		t[i] = func
 		core.callback_origins[func] = {
 			mod = core.get_current_modname() or "??",
 			name = debug.getinfo(1, "n").name or "??"
 		}
 		--local origin = core.callback_origins[func]
 		--print(origin.name .. ": " .. origin.mod .. " registering cbk " .. tostring(func))
+		return function()
+			t[i] = nil
+		end
 	end
 	return t, registerfunc
 end

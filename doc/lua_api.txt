@@ -5210,6 +5210,8 @@ Global callback registration functions
 
 Call these functions only at load time!
 
+These callback registration functions will return an unregister function that can be used to unregister the corresponding registration at a later time.
+
 * `minetest.register_globalstep(function(dtime))`
     * Called every server step, usually interval of 0.1s
 * `minetest.register_on_mods_loaded(function())`
