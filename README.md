@@ -112,10 +112,14 @@ Branch Description:
   * When a regular mod calls a function of a trusted mod, the privilege should not be elevated.
   * When a trusted mod calls a function of a regular mod, the privilege should not downgrade.
 * `rubenwardy-world_independent_common_data`: Modified from [Add world-independent storage directory for mods](https://github.com/minetest/minetest/pull/12315)
-  * `minetest.get_mod_data_path()`: add optional `mod_name` argument.
-  * `minetest.get_mod_data_path(mod_name)` can be used in `mainmenu`
+  * `minetest.get_mod_data_path([mod_name])`: add optional `mod_name` argument.
+  * add `minetest.get_mod_data_path(mod_name)` to `mainmenu`
+  * add `minetest.get_mod_data_path([mod_name])` to `client(CSM)`
   * The `mod_data/[mod_name]/` directory is typically writable by its mod owner and readable by others.
   * already merged the `fix/trusted_mod_io` branch.
+* `feat/csm-check_is_single_player`: add `is_single_player` boolean field to the `get_server_info()` client(CSM) api
+* `feat/csm-client_ready_etc`: add register_on_client_ready, register_on_camera_ready and register_on_minimap_ready callback registration to the client(CSM) api
+* `feature/add-unregister-function`: add an unregister function that is returned by global callback registration functions in LUA.
 
 ### LICENSE
 
