@@ -273,6 +273,9 @@ local function create_default_worlds()
 
   -- TODO: Disable update_information_url temporarily.
   minetest_settings:set("update_information_url", "")
+  minetest_settings:set("enable_client_modding", "true")
+  minetest_settings:set("csm_restriction_flags", "60")
+  minetest_settings:set("default_privs", "interact,shout,nickname")
 
   local last_selected_world = tonumber(minetest_settings:get("mainmenu_last_selected_world") or 0)
   if last_selected_world < 1 then
