@@ -230,21 +230,22 @@ local function dialog_event_handler(event)
 end
 
 local function create_default_worlds()
+  local minetest_settings = core.settings
 
   -- Preserve the old map seed and mapgen values
-  local old_map_seed = core.settings:get("fixed_map_seed")
-  local old_mapgen = core.settings:get("mg_name")
+  local old_map_seed = minetest_settings:get("fixed_map_seed")
+  local old_mapgen = minetest_settings:get("mg_name")
 
   -- defaults to creative_mode
   -- the create_world() will use the `creative_mode` as default value.
-  core.settings:set("creative_mode", "true")
+  minetest_settings:set("creative_mode", "true")
 
   -- Create the worlds
   for _, world in ipairs(default_worlds) do
     local _, gameindex = pkgmgr.find_by_gameid(world.game)
     if gameindex ~= nil and not menudata.worldlist:uid_exists_raw(world.name) then
-      if world.seed ~= nil then core.settings:set("fixed_map_seed", world.seed) end
-      core.settings:set("mg_name", world.mg_name)
+      if world.seed ~= nil then minetest_settings:set("fixed_map_seed", world.seed) end
+      minetest_settings:set("mg_name", world.mg_name)
       local msg = core.create_world(world.name, world.game, world)
       if msg ~= nil then
         gamedata.errormessage = msg
@@ -260,24 +261,24 @@ local function create_default_worlds()
 
   -- Restore the old values
   if old_map_seed then
-    core.settings:set("fixed_map_seed", old_map_seed)
+    minetest_settings:set("fixed_map_seed", old_map_seed)
   else
-    core.settings:remove("fixed_map_seed")
+    minetest_settings:remove("fixed_map_seed")
   end
   if old_mapgen then
-    core.settings:set("mg_name", old_mapgen)
+    minetest_settings:set("mg_name", old_mapgen)
   else
-    core.settings:remove("mg_name")
+    minetest_settings:remove("mg_name")
   end
 
   -- TODO: Disable update_information_url temporarily.
-  core.settings:set("update_information_url", "")
+  minetest_settings:set("update_information_url", "")
 
-  local last_selected_world = tonumber(core.settings:get("mainmenu_last_selected_world") or 0)
+  local last_selected_world = tonumber(minetest_settings:get("mainmenu_last_selected_world") or 0)
   if last_selected_world < 1 then
     local worldidx = menudata.worldlist:raw_index_by_uid(default_worlds[1].name)
     if worldidx > 0 then
-      core.settings:set("mainmenu_last_selected_world", worldidx)
+      minetest_settings:set("mainmenu_last_selected_world", worldidx)
     end
   end
 end
@@ -285,10 +286,14 @@ end
 local checked_worlds = false
 local function check_default_worlds()
   -- menudata.worldlist:set_filtercriteria("minetest")
-
+  local missing = menudata.worldlist:size() == 0
+  if not missing then
+    local world = default_worlds[1]
+    missing = not menudata.worldlist:uid_exists_raw(world.name)
+  end
+  -- missing = true
   -- Only check the worlds once (on restart)
-  -- if not checked_worlds and #menudata.worldlist:get_list() == 0 then
-  if not checked_worlds then
+  if not checked_worlds and missing then
     create_default_worlds()
   end
   checked_worlds = true
