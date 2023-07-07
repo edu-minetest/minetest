@@ -188,7 +188,7 @@ local function dialog_button_handler(this, fields, confirmPass)
       if pass and pass ~= "" then gamedata.password = core.decode_base64(pass) end
     end
     gamedata.playername = name
-    local worldidx = tonumber(core.settings:get("mainmenu_last_selected_world"))
+    local worldidx = tonumber(core.settings:get("mainmenu_last_selected_world") or 0)
     if worldidx < 1 then
       worldidx = menudata.worldlist:raw_index_by_uid(default_worlds[1].name)
     end
